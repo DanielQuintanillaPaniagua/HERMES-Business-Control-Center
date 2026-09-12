@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - HERMES{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="dashboard-title">Bienvenido, {{ current_user.username }} 👋</h1>
+    <p class="text-muted">Aquí tienes el resumen de tu negocio hoy.</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="metric-card">
+            <h6 class="text-muted">Clientes</h6>
+            <h3>—</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <h6 class="text-muted">Pedidos</h6>
+            <h3>—</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <h6 class="text-muted">Envíos</h6>
+            <h3>—</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <h6 class="text-muted">Ingresos del mes</h6>
+            <h3>—</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

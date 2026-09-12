@@ -1,0 +1,153 @@
+:root {
+    --hermes-gold: #d4af37;
+    --hermes-gold-hover: #b8941f;
+    --hermes-dark: #1a1a1a;
+    --hermes-darker: #0d0d0d;
+    --hermes-border: #2a2a2a;
+}
+
+/* --- Base --- */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Navbar --- */
+.navbar-hermes {
+    background-color: var(--hermes-dark) !important;
+    border-bottom: 1px solid var(--hermes-border);
+}
+
+.navbar-hermes .navbar-brand {
+    color: var(--hermes-gold) !important;
+    font-weight: bold;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-hermes .navbar-brand:hover {
+    color: var(--hermes-gold-hover) !important;
+}
+
+/* --- Botones --- */
+.btn-gold {
+    background-color: var(--hermes-gold);
+    color: #000;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-gold:hover {
+    background-color: var(--hermes-gold-hover);
+    color: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Login / Register --- */
+.login-wrapper {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 20% 30%, #1f1c14 0%, #0d0d0d 60%);
+    padding: 40px 20px;
+    margin-top: -24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid var(--hermes-border);
+    border-radius: 16px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+/* --- Inputs oscuros --- */
+.form-control-dark {
+    background-color: var(--hermes-darker);
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.form-control-dark:focus {
+    background-color: var(--hermes-darker);
+    border-color: var(--hermes-gold);
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+.form-control-dark::placeholder {
+    color: #666;
+}
+
+/* --- Textos en el login (contraste mejorado) --- */
+.login-card .text-muted {
+    color: #b0b0b0 !important;
+}
+
+.login-card .text-light {
+    color: #e0e0e0 !important;
+}
+
+.login-card .form-check-label {
+    color: #ccc !important;
+}
+
+.login-card hr {
+    border-color: #444 !important;
+    opacity: 0.6;
+}
+
+.login-card h4 {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* --- Dashboard --- */
+.dashboard-title {
+    color: var(--hermes-gold);
+    font-weight: 700;
+}
+
+.metric-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #eee;
+    transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.metric-card h6 {
+    color: #888;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-card h3 {
+    color: #222;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+/* --- Utilidades --- */
+.text-gold {
+    color: var(--hermes-gold) !important;
+}
+
+.bg-dark-page {
+    background-color: var(--hermes-darker);
+}

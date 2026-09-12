@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Crear cuenta - HERMES{% endblock %}
+{% block body_class %}bg-dark-page{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="HERMES" style="height: 90px;">
+        </div>
+
+        <h4 class="text-center text-white mb-1">Crear cuenta</h4>
+        <p class="text-center text-muted small mb-4">Comienza a usar HERMES</p>
+
+        <form method="POST" action="{{ url_for('auth.register') }}">
+            <div class="mb-3">
+                <label class="form-label text-light small">Nombre de usuario</label>
+                <input type="text" name="username" class="form-control form-control-dark" placeholder="tu_usuario"
+                    required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-light small">Correo electrónico</label>
+                <input type="email" name="email" class="form-control form-control-dark"
+                    placeholder="usuario@empresa.com" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-light small">Contraseña</label>
+                <input type="password" name="password" class="form-control form-control-dark"
+                    placeholder="Mínimo 6 caracteres" required minlength="6">
+            </div>
+
+            <button type="submit" class="btn btn-gold w-100 py-2">
+                Crear cuenta
+            </button>
+        </form>
+
+        <hr class="my-4" style="border-color: #333;">
+
+        <p class="text-center mb-0 small text-muted">
+            ¿Ya tienes cuenta?
+            <a href="{{ url_for('auth.login') }}" class="text-gold">Inicia sesión</a>
+        </p>
+    </div>
+
+    <p class="text-center text-muted small mt-4 mb-0">
+        © 2026 HERMES. Todos los derechos reservados.
+    </p>
+</div>
+{% endblock %}
