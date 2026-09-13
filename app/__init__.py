@@ -50,8 +50,12 @@ def create_app():
     
     from app.routes.auth import bp as auth_bp
     from app.routes.dashboard import bp as dashboard_bp
-    
+    from app.routes.reportes import bp as reportes_bp
+    from app.routes.ia_hermes import bp as ia_hermes_bp
+
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(reportes_bp)
+    app.register_blueprint(ia_hermes_bp)
     
     return app
