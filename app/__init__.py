@@ -53,6 +53,10 @@ def create_app():
     from app.routes.reportes import bp as reportes_bp
     from app.routes.ia_hermes import bp as ia_hermes_bp
     from app.routes.clients import bp as clients_bp
+    from app.routes.suppliers import bp as suppliers_bp
+    from app.routes.products import bp as products_bp      
+
+
 
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -60,5 +64,8 @@ def create_app():
     app.register_blueprint(reportes_bp)
     app.register_blueprint(ia_hermes_bp)
     app.register_blueprint(clients_bp)
+    app.register_blueprint(suppliers_bp)
+    app.register_blueprint(products_bp)
+
 
     return app
