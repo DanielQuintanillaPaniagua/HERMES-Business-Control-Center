@@ -16,3 +16,5 @@ class Client(db.Model):
 
     def __repr__(self):
         return f"<Client {self.nombre}>"
+
+
