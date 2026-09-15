@@ -1,5 +1,5 @@
-# app/models/user.py
-# Modelo de Usuario para autenticación
+﻿# app/models/user.py
+# Modelo de Usuario para autenticaciÃ³n
 
 from datetime import datetime
 from flask_login import UserMixin
@@ -19,11 +19,11 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     def set_password(self, password):
-        """Hashea y guarda la contraseña."""
+        """Hashea y guarda la contraseÃ±a."""
         self.password_hash = generate_password_hash(password)
     
     def check_password(self, password):
-        """Verifica si una contraseña coincide con el hash guardado."""
+        """Verifica si una contraseÃ±a coincide con el hash guardado."""
         return check_password_hash(self.password_hash, password)
     
     def __repr__(self):

@@ -18,3 +18,4 @@ class Client(db.Model):
         return f"<Client {self.nombre}>"
 
 
+

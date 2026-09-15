@@ -1,4 +1,4 @@
-from datetime import datetime
+﻿from datetime import datetime
 from flask import Blueprint, request, jsonify
 from flask_login import login_required
 from app import db
@@ -12,7 +12,7 @@ bp = Blueprint('shipments', __name__, url_prefix='/api/shipments')
 @bp.route('/', methods=['GET'])
 @login_required
 def list_shipments():
-    """Devuelve la lista de todos los envíos."""
+    """Devuelve la lista de todos los envÃ­os."""
     envios = Shipment.query.order_by(Shipment.created_at.desc()).all()
     return jsonify({
         'success': True,
@@ -25,10 +25,10 @@ def list_shipments():
 @bp.route('/<int:id>', methods=['GET'])
 @login_required
 def get_shipment(id):
-    """Devuelve un envío específico."""
+    """Devuelve un envÃ­o especÃ­fico."""
     envio = Shipment.query.get(id)
     if not envio:
-        return jsonify({'success': False, 'error': 'Envío no encontrado'}), 404
+        return jsonify({'success': False, 'error': 'EnvÃ­o no encontrado'}), 404
     return jsonify({'success': True, 'envio': envio.to_dict()})
 
 
@@ -36,7 +36,7 @@ def get_shipment(id):
 @bp.route('/', methods=['POST'])
 @login_required
 def create_shipment():
-    """Crea un nuevo envío para un pedido."""
+    """Crea un nuevo envÃ­o para un pedido."""
     data = request.get_json()
 
     if not data:
@@ -49,21 +49,21 @@ def create_shipment():
     numero_guia = (data.get('numero_guia') or '').strip().upper()
 
     if not pedido_id or not direccion_envio:
-        return jsonify({'success': False, 'error': 'Pedido y dirección de envío son obligatorios'}), 400
+        return jsonify({'success': False, 'error': 'Pedido y direcciÃ³n de envÃ­o son obligatorios'}), 400
 
     pedido = Order.query.get(pedido_id)
     if not pedido:
         return jsonify({'success': False, 'error': 'Pedido no encontrado'}), 404
 
     if numero_guia and Shipment.query.filter_by(numero_guia=numero_guia).first():
-        return jsonify({'success': False, 'error': 'Ese número de guía ya está registrado'}), 409
+        return jsonify({'success': False, 'error': 'Ese nÃºmero de guÃ­a ya estÃ¡ registrado'}), 409
 
     fecha_entrega_estimada = None
     if data.get('fecha_entrega_estimada'):
         try:
             fecha_entrega_estimada = datetime.fromisoformat(data['fecha_entrega_estimada'])
         except ValueError:
-            return jsonify({'success': False, 'error': 'Formato de fecha inválido'}), 400
+            return jsonify({'success': False, 'error': 'Formato de fecha invÃ¡lido'}), 400
 
     envio = Shipment(
         pedido_id=pedido.id,
@@ -79,7 +79,7 @@ def create_shipment():
 
     return jsonify({
         'success': True,
-        'message': f'Envío #{envio.id} creado exitosamente',
+        'message': f'EnvÃ­o #{envio.id} creado exitosamente',
         'envio': envio.to_dict()
     }), 201
 
@@ -88,10 +88,10 @@ def create_shipment():
 @bp.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_shipment(id):
-    """Actualiza un envío existente."""
+    """Actualiza un envÃ­o existente."""
     envio = Shipment.query.get(id)
     if not envio:
-        return jsonify({'success': False, 'error': 'Envío no encontrado'}), 404
+        return jsonify({'success': False, 'error': 'EnvÃ­o no encontrado'}), 404
 
     data = request.get_json()
     if not data:
@@ -104,25 +104,25 @@ def update_shipment(id):
     estado = data.get('estado', envio.estado)
 
     if not direccion_envio:
-        return jsonify({'success': False, 'error': 'La dirección de envío es obligatoria'}), 400
+        return jsonify({'success': False, 'error': 'La direcciÃ³n de envÃ­o es obligatoria'}), 400
 
     existente = Shipment.query.filter_by(numero_guia=numero_guia).first() if numero_guia else None
     if existente and existente.id != id:
-        return jsonify({'success': False, 'error': 'Ese número de guía ya está en uso'}), 409
+        return jsonify({'success': False, 'error': 'Ese nÃºmero de guÃ­a ya estÃ¡ en uso'}), 409
 
     fecha_envio = envio.fecha_envio
     if data.get('fecha_envio'):
         try:
             fecha_envio = datetime.fromisoformat(data['fecha_envio'])
         except ValueError:
-            return jsonify({'success': False, 'error': 'Formato de fecha de envío inválido'}), 400
+            return jsonify({'success': False, 'error': 'Formato de fecha de envÃ­o invÃ¡lido'}), 400
 
     fecha_entrega_estimada = envio.fecha_entrega_estimada
     if data.get('fecha_entrega_estimada'):
         try:
             fecha_entrega_estimada = datetime.fromisoformat(data['fecha_entrega_estimada'])
         except ValueError:
-            return jsonify({'success': False, 'error': 'Formato de fecha estimada inválido'}), 400
+            return jsonify({'success': False, 'error': 'Formato de fecha estimada invÃ¡lido'}), 400
 
     envio.direccion_envio = direccion_envio
     envio.ciudad = ciudad
@@ -135,7 +135,7 @@ def update_shipment(id):
 
     return jsonify({
         'success': True,
-        'message': 'Envío actualizado exitosamente',
+        'message': 'EnvÃ­o actualizado exitosamente',
         'envio': envio.to_dict()
     })
 
@@ -144,15 +144,15 @@ def update_shipment(id):
 @bp.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_shipment(id):
-    """Elimina un envío."""
+    """Elimina un envÃ­o."""
     envio = Shipment.query.get(id)
     if not envio:
-        return jsonify({'success': False, 'error': 'Envío no encontrado'}), 404
+        return jsonify({'success': False, 'error': 'EnvÃ­o no encontrado'}), 404
 
     db.session.delete(envio)
     db.session.commit()
 
     return jsonify({
         'success': True,
-        'message': f'Envío #{id} eliminado correctamente'
+        'message': f'EnvÃ­o #{id} eliminado correctamente'
     })

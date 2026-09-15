@@ -54,7 +54,9 @@ def create_app():
     from app.routes.ia_hermes import bp as ia_hermes_bp
     from app.routes.clients import bp as clients_bp
     from app.routes.suppliers import bp as suppliers_bp
-    from app.routes.products import bp as products_bp      
+    from app.routes.products import bp as products_bp 
+    from app.routes.orders import bp as orders_bp
+    from app.routes.shipments import bp as shipments_bp         
 
 
 
@@ -66,6 +68,8 @@ def create_app():
     app.register_blueprint(clients_bp)
     app.register_blueprint(suppliers_bp)
     app.register_blueprint(products_bp)
+    app.register_blueprint(orders_bp)
+    app.register_blueprint(shipments_bp)
 
 
     return app

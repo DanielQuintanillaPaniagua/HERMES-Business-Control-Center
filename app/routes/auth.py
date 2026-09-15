@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+﻿from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import db
 from app.models.user import User
@@ -23,15 +23,15 @@ def register():
             return redirect(url_for('auth.register'))
         
         if len(password) < 6:
-            flash('La contraseña debe tener al menos 6 caracteres', 'danger')
+            flash('La contraseÃ±a debe tener al menos 6 caracteres', 'danger')
             return redirect(url_for('auth.register'))
         
         if User.query.filter_by(email=email).first():
-            flash('Ese email ya está registrado', 'danger')
+            flash('Ese email ya estÃ¡ registrado', 'danger')
             return redirect(url_for('auth.register'))
         
         if User.query.filter_by(username=username).first():
-            flash('Ese nombre de usuario ya está en uso', 'danger')
+            flash('Ese nombre de usuario ya estÃ¡ en uso', 'danger')
             return redirect(url_for('auth.register'))
         
         nuevo_usuario = User(username=username, email=email)
@@ -41,7 +41,7 @@ def register():
         db.session.commit()
         
         login_user(nuevo_usuario)
-        flash(f'¡Cuenta creada exitosamente! Bienvenido, {username}', 'success')
+        flash(f'Â¡Cuenta creada exitosamente! Bienvenido, {username}', 'success')
         return redirect(url_for('dashboard.index'))
     
     return render_template('register.html')
@@ -49,7 +49,7 @@ def register():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
-    """Inicio de sesión."""
+    """Inicio de sesiÃ³n."""
     if current_user.is_authenticated:
         return redirect(url_for('dashboard.index'))
     
@@ -60,11 +60,11 @@ def login():
         usuario = User.query.filter_by(email=email).first()
         
         if usuario is None or not usuario.check_password(password):
-            flash('Email o contraseña incorrectos', 'danger')
+            flash('Email o contraseÃ±a incorrectos', 'danger')
             return redirect(url_for('auth.login'))
         
         login_user(usuario)
-        flash(f'¡Bienvenido de nuevo, {usuario.username}!', 'success')
+        flash(f'Â¡Bienvenido de nuevo, {usuario.username}!', 'success')
         return redirect(url_for('dashboard.index'))
     
     return render_template('login.html')
@@ -73,7 +73,7 @@ def login():
 @bp.route('/logout')
 @login_required
 def logout():
-    """Cierre de sesión."""
+    """Cierre de sesiÃ³n."""
     logout_user()
-    flash('Has cerrado sesión correctamente', 'info')
+    flash('Has cerrado sesiÃ³n correctamente', 'info')
     return redirect(url_for('auth.login'))

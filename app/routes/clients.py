@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+﻿from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from app import db
 from app.models.client import Client
@@ -29,9 +29,9 @@ def create():
             flash('Nombre y email son obligatorios', 'danger')
             return redirect(url_for('clients.create'))
 
-        # Verificar email único
+        # Verificar email Ãºnico
         if Client.query.filter_by(email=email).first():
-            flash('Ese email ya está registrado', 'danger')
+            flash('Ese email ya estÃ¡ registrado', 'danger')
             return redirect(url_for('clients.create'))
 
         # Crear cliente
@@ -76,10 +76,10 @@ def edit(id):
             flash('Nombre y email son obligatorios', 'danger')
             return redirect(url_for('clients.edit', id=id))
 
-        # Verificar email único (excepto el propio cliente)
+        # Verificar email Ãºnico (excepto el propio cliente)
         existente = Client.query.filter_by(email=email).first()
         if existente and existente.id != id:
-            flash('Ese email ya está registrado por otro cliente', 'danger')
+            flash('Ese email ya estÃ¡ registrado por otro cliente', 'danger')
             return redirect(url_for('clients.edit', id=id))
 
         cliente.nombre = nombre

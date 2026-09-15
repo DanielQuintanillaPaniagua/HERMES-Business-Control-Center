@@ -1,9 +1,9 @@
-from datetime import datetime
+﻿from datetime import datetime
 from app import db
 
 
 class Product(db.Model):
-    """Modelo que representa un producto del catálogo."""
+    """Modelo que representa un producto del catÃ¡logo."""
 
     __tablename__ = 'products'
 
