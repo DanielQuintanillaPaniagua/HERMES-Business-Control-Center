@@ -56,7 +56,8 @@ def create_app():
     from app.routes.suppliers import bp as suppliers_bp
     from app.routes.products import bp as products_bp 
     from app.routes.orders import bp as orders_bp
-    from app.routes.shipments import bp as shipments_bp         
+    from app.routes.shipments import bp as shipments_bp
+    from app.routes.clients_ui import bp as clients_ui_bp    
 
 
 
@@ -70,6 +71,7 @@ def create_app():
     app.register_blueprint(products_bp)
     app.register_blueprint(orders_bp)
     app.register_blueprint(shipments_bp)
+    app.register_blueprint(clients_ui_bp)
 
 
     return app

@@ -1,108 +1,127 @@
-﻿from flask import Blueprint, render_template, request, redirect, url_for, flash
+﻿from flask import Blueprint, request, jsonify
 from flask_login import login_required
 from app import db
 from app.models.client import Client
 
-bp = Blueprint('clients', __name__, url_prefix='/clients')
+bp = Blueprint('clients', __name__, url_prefix='/api/clients')
 
 
-@bp.route('/')
+# LISTAR: GET /api/clients
+@bp.route('/', methods=['GET'])
 @login_required
-def list():
-    """Lista todos los clientes."""
+def list_clients():
+    """Devuelve la lista de todos los clientes en JSON."""
     clientes = Client.query.order_by(Client.nombre).all()
-    return render_template('clients/list.html', clientes=clientes)
+    return jsonify({
+        'success': True,
+        'total': len(clientes),
+        'clientes': [c.to_dict() for c in clientes]
+    })
 
 
-@bp.route('/new', methods=['GET', 'POST'])
+# VER UNO: GET /api/clients/<id>
+@bp.route('/<int:id>', methods=['GET'])
 @login_required
-def create():
-    """Crear un nuevo cliente."""
-    if request.method == 'POST':
-        nombre = request.form.get('nombre', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        telefono = request.form.get('telefono', '').strip()
-        ciudad = request.form.get('ciudad', '').strip()
-
-        # Validaciones
-        if not nombre or not email:
-            flash('Nombre y email son obligatorios', 'danger')
-            return redirect(url_for('clients.create'))
-
-        # Verificar email Ãºnico
-        if Client.query.filter_by(email=email).first():
-            flash('Ese email ya estÃ¡ registrado', 'danger')
-            return redirect(url_for('clients.create'))
-
-        # Crear cliente
-        cliente = Client(
-            nombre=nombre,
-            email=email,
-            telefono=telefono,
-            ciudad=ciudad,
-            estado='Activo'
-        )
-        db.session.add(cliente)
-        db.session.commit()
-
-        flash(f'Cliente "{nombre}" creado exitosamente', 'success')
-        return redirect(url_for('clients.list'))
-
-    return render_template('clients/form.html', cliente=None)
+def get_client(id):
+    """Devuelve un cliente específico."""
+    cliente = Client.query.get(id)
+    if not cliente:
+        return jsonify({'success': False, 'error': 'Cliente no encontrado'}), 404
+    return jsonify({'success': True, 'cliente': cliente.to_dict()})
 
 
-@bp.route('/<int:id>')
+# CREAR: POST /api/clients
+@bp.route('/', methods=['POST'])
 @login_required
-def detail(id):
-    """Ver detalle de un cliente."""
-    cliente = Client.query.get_or_404(id)
-    return render_template('clients/detail.html', cliente=cliente)
+def create_client():
+    """Crea un nuevo cliente desde JSON."""
+    data = request.get_json()
+
+    if not data:
+        return jsonify({'success': False, 'error': 'No se enviaron datos'}), 400
+
+    nombre = (data.get('nombre') or '').strip()
+    email = (data.get('email') or '').strip().lower()
+    telefono = (data.get('telefono') or '').strip()
+    ciudad = (data.get('ciudad') or '').strip()
+
+    if not nombre or not email:
+        return jsonify({'success': False, 'error': 'Nombre y email son obligatorios'}), 400
+
+    if Client.query.filter_by(email=email).first():
+        return jsonify({'success': False, 'error': 'Ese email ya está registrado'}), 409
+
+    cliente = Client(
+        nombre=nombre,
+        email=email,
+        telefono=telefono,
+        ciudad=ciudad,
+        estado='Activo'
+    )
+    db.session.add(cliente)
+    db.session.commit()
+
+    return jsonify({
+        'success': True,
+        'message': f'Cliente "{nombre}" creado exitosamente',
+        'cliente': cliente.to_dict()
+    }), 201
 
 
-@bp.route('/<int:id>/edit', methods=['GET', 'POST'])
+# EDITAR: PUT /api/clients/<id>
+@bp.route('/<int:id>', methods=['PUT'])
 @login_required
-def edit(id):
-    """Editar un cliente existente."""
-    cliente = Client.query.get_or_404(id)
+def update_client(id):
+    """Actualiza un cliente existente."""
+    cliente = Client.query.get(id)
+    if not cliente:
+        return jsonify({'success': False, 'error': 'Cliente no encontrado'}), 404
 
-    if request.method == 'POST':
-        nombre = request.form.get('nombre', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        telefono = request.form.get('telefono', '').strip()
-        ciudad = request.form.get('ciudad', '').strip()
-        estado = request.form.get('estado', 'Activo')
+    data = request.get_json()
+    if not data:
+        return jsonify({'success': False, 'error': 'No se enviaron datos'}), 400
 
-        if not nombre or not email:
-            flash('Nombre y email son obligatorios', 'danger')
-            return redirect(url_for('clients.edit', id=id))
+    nombre = (data.get('nombre') or cliente.nombre).strip()
+    email = (data.get('email') or cliente.email).strip().lower()
+    telefono = (data.get('telefono') or '').strip()
+    ciudad = (data.get('ciudad') or '').strip()
+    estado = data.get('estado', cliente.estado)
 
-        # Verificar email Ãºnico (excepto el propio cliente)
-        existente = Client.query.filter_by(email=email).first()
-        if existente and existente.id != id:
-            flash('Ese email ya estÃ¡ registrado por otro cliente', 'danger')
-            return redirect(url_for('clients.edit', id=id))
+    if not nombre or not email:
+        return jsonify({'success': False, 'error': 'Nombre y email son obligatorios'}), 400
 
-        cliente.nombre = nombre
-        cliente.email = email
-        cliente.telefono = telefono
-        cliente.ciudad = ciudad
-        cliente.estado = estado
-        db.session.commit()
+    existente = Client.query.filter_by(email=email).first()
+    if existente and existente.id != id:
+        return jsonify({'success': False, 'error': 'Ese email ya está en uso'}), 409
 
-        flash('Cliente actualizado exitosamente', 'success')
-        return redirect(url_for('clients.list'))
+    cliente.nombre = nombre
+    cliente.email = email
+    cliente.telefono = telefono
+    cliente.ciudad = ciudad
+    cliente.estado = estado
+    db.session.commit()
 
-    return render_template('clients/form.html', cliente=cliente)
+    return jsonify({
+        'success': True,
+        'message': 'Cliente actualizado exitosamente',
+        'cliente': cliente.to_dict()
+    })
 
 
-@bp.route('/<int:id>/delete', methods=['POST'])
+# ELIMINAR: DELETE /api/clients/<id>
+@bp.route('/<int:id>', methods=['DELETE'])
 @login_required
-def delete(id):
-    """Eliminar un cliente."""
-    cliente = Client.query.get_or_404(id)
+def delete_client(id):
+    """Elimina un cliente."""
+    cliente = Client.query.get(id)
+    if not cliente:
+        return jsonify({'success': False, 'error': 'Cliente no encontrado'}), 404
+
     nombre = cliente.nombre
     db.session.delete(cliente)
     db.session.commit()
 
-    flash(f'Cliente "{nombre}" eliminado', 'info')
-    return redirect(url_for('clients.list'))
+    return jsonify({
+        'success': True,
+        'message': f'Cliente "{nombre}" eliminado correctamente'
+    })
