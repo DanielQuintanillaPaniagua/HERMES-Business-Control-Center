@@ -1,4 +1,6 @@
-﻿from flask import Blueprint, render_template
+﻿# pyrefly: ignore [missing-import]
+from flask import Blueprint, render_template
+# pyrefly: ignore [missing-import]
 from flask_login import login_required
 
 bp = Blueprint('ia_hermes', __name__)

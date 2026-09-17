@@ -1,4 +1,6 @@
-﻿from flask import Blueprint, render_template, request, redirect, url_for, flash
+﻿# pyrefly: ignore [missing-import]
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+# pyrefly: ignore [missing-import]
 from flask_login import login_required
 from app import db
 from app.models.client import Client

@@ -2,36 +2,49 @@
 
 {% block title %}Dashboard - HERMES{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="mb-4">
-    <h1 class="dashboard-title">Bienvenido, {{ current_user.username }} 👋</h1>
-    <p class="text-muted">Aquí tienes el resumen de tu negocio hoy.</p>
+<div class="welcome-banner mb-4">
+    <div>
+        <h1 class="dashboard-title mb-1">Bienvenido, {{ current_user.username }} 👋</h1>
+        <p class="text-muted mb-0">Aquí tienes el resumen de tu negocio hoy.</p>
+    </div>
+    <div class="welcome-banner-icon">
+        <i class="bi bi-graph-up-arrow"></i>
+    </div>
 </div>
 
-<div class="row g-3">
-    <div class="col-md-3">
-        <div class="metric-card">
-            <h6 class="text-muted">Clientes</h6>
-            <h3>—</h3>
+<!-- Las 6 tarjetas de métricas se generan por JS (dashboard.js) -->
+<div id="dashboard-stats" class="row g-3"></div>
+
+<div class="row g-3 mt-1">
+    <div class="col-lg-8">
+        <div class="metric-card metric-card-chart h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="text-muted mb-0"><i class="bi bi-graph-up me-1"></i> Ventas de los últimos 30 días</h6>
+            </div>
+            <canvas id="chart-ventas"></canvas>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="metric-card">
-            <h6 class="text-muted">Pedidos</h6>
-            <h3>—</h3>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="metric-card">
-            <h6 class="text-muted">Envíos</h6>
-            <h3>—</h3>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="metric-card">
-            <h6 class="text-muted">Ingresos del mes</h6>
-            <h3>—</h3>
+    <div class="col-lg-4">
+        <div class="metric-card metric-card-chart h-100">
+            <h6 class="text-muted mb-3"><i class="bi bi-pie-chart-fill me-1"></i> Pedidos por estado</h6>
+            <canvas id="chart-pedidos"></canvas>
         </div>
     </div>
 </div>
+
+<div class="row g-3 mt-1">
+    <div class="col-12">
+        <div id="dashboard-alerts"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}
