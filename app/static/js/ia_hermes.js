@@ -1,19 +1,4 @@
-/* ==========================================================================
-   HERMES AI - lógica del chat
-   - askHermesAI(pregunta) es el punto de integración con el backend Flask.
-     Cuando el endpoint exista, reemplazar el bloque MOCK por el fetch real:
 
-       const res = await fetch("/api/hermes-ai", {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({ pregunta })
-       });
-       const data = await res.json();
-       return data;   // { respuesta: "...", tabla: {...} | null }
-
-   - El backend debe devolver texto en lenguaje natural y, opcionalmente,
-     una tabla de datos (por ejemplo pedidos atrasados) para renderizar.
-   ========================================================================== */
 
 const chatMessages = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
@@ -21,29 +6,40 @@ const sendBtn = document.getElementById("sendBtn");
 
 
 async function askHermesAI(pregunta) {
-    await new Promise((r) => setTimeout(r, 700));
+    try {
+        const res = await fetch("/api/ai/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ pregunta: pregunta })
+        });
 
-    if (/atrasad/i.test(pregunta)) {
+        if (res.status === 401) {
+            window.location.href = "/auth/login";
+            return { respuesta: "Tu sesión ha expirado. Por favor inicia sesión de nuevo.", tabla: null };
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            return {
+                respuesta: data.respuesta,
+                tabla: null  // Tu API no devuelve tablas, solo texto
+            };
+        } else {
+            return {
+                respuesta: "❌ " + (data.error || "Error al procesar la consulta."),
+                tabla: null
+            };
+        }
+    } catch (error) {
+        console.error("Error al llamar a HERMES AI:", error);
         return {
-            respuesta: "Tienes 7 pedidos atrasados. Estos son los más urgentes:",
-            tabla: {
-                headers: ["Pedido", "Cliente", "Días de retraso", "Total"],
-                rows: [
-                    ["#1021", "Distribuidora López", "4 días", "$1,290.00"],
-                    ["#1023", "Supermercado El Sol", "3 días", "$2,340.00"],
-                    ["#1045", "Tiendas Unidas", "2 días", "$950.00"]
-                ]
-            }
+            respuesta: "No pude conectarme con el servidor. Intenta de nuevo en unos segundos.",
+            tabla: null
         };
     }
-
-    if (/prove/i.test(pregunta)) {
-        return { respuesta: "Actualmente se deben $8,420.00 a proveedores, repartidos entre 5 cuentas activas.", tabla: null };
-    }
-
-    return { respuesta: "Estoy consultando la base de datos del negocio para responder eso. (Respuesta de ejemplo mientras se conecta el backend.)", tabla: null };
 }
-
 function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }

@@ -14,8 +14,20 @@ class Client(db.Model):
     estado = db.Column(db.String(20), default="Activo", nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    def to_dict(self):
+        """Convierte el cliente a diccionario para JSON."""
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'email': self.email,
+            'telefono': self.telefono,
+            'ciudad': self.ciudad,
+            'estado': self.estado,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
+
     def __repr__(self):
-        return f"<Client {self.nombre}>"
+        return f'<Client {self.nombre}>'
 
 
 
