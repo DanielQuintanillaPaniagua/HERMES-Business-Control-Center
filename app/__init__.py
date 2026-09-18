@@ -56,6 +56,7 @@ def create_app():
     from app.routes.products import bp as products_bp
     from app.routes.orders import bp as orders_bp
     from app.routes.shipments import bp as shipments_bp
+    from app.routes.placeholder import bp as placeholder_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp)
@@ -67,5 +68,6 @@ def create_app():
     app.register_blueprint(products_bp)
     app.register_blueprint(orders_bp)
     app.register_blueprint(shipments_bp)
+    app.register_blueprint(placeholder_bp)
 
     return app

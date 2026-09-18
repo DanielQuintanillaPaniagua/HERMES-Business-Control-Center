@@ -1,98 +1,193 @@
 {% extends "base.html" %}
 
-{% block title %}HERMES AI - HERMES{% endblock %}
+{% block title %}IA HERMES{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/hermes.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/ia_hermes.css') }}">
+<style>
+    .chat-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 72px - 48px);
+        max-height: 720px;
+    }
+
+    .chat-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid var(--hermes-border);
+    }
+
+    .chat-header .avatar-ia {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--hermes-gold), #8a6d1f);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: #000;
+    }
+
+    .chat-mensajes {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 8px 4px 16px;
+    }
+
+    .msg {
+        max-width: 75%;
+        padding: 12px 16px;
+        border-radius: 14px;
+        font-size: 0.92rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+    }
+
+    .msg-usuario {
+        align-self: flex-end;
+        background: var(--hermes-gold);
+        color: #000;
+        border-bottom-right-radius: 4px;
+    }
+
+    .msg-ia {
+        align-self: flex-start;
+        background: var(--hermes-panel-2);
+        border: 1px solid var(--hermes-border);
+        color: var(--hermes-text);
+        border-bottom-left-radius: 4px;
+    }
+
+    .msg-ia.error {
+        border-color: rgba(220, 53, 69, 0.4);
+        color: #ff8a94;
+    }
+
+    .typing-dots span {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--hermes-text-muted);
+        margin: 0 2px;
+        animation: typing 1s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .typing-dots span:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes typing {
+
+        0%,
+        60%,
+        100% {
+            opacity: 0.3;
+        }
+
+        30% {
+            opacity: 1;
+        }
+    }
+
+    .chat-sugerencias {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .chip-sugerencia {
+        background: var(--hermes-panel-2);
+        border: 1px solid var(--hermes-border);
+        color: var(--hermes-text);
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+
+    .chip-sugerencia:hover {
+        border-color: var(--hermes-gold);
+        color: var(--hermes-gold);
+    }
+
+    .chat-input-bar {
+        display: flex;
+        gap: 10px;
+        border-top: 1px solid var(--hermes-border);
+        padding-top: 16px;
+    }
+
+    .chat-input-bar input {
+        flex: 1;
+        background: var(--hermes-panel-2);
+        border: 1px solid var(--hermes-border);
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: var(--hermes-text);
+        outline: none;
+        font-size: 0.9rem;
+    }
+
+    .chat-input-bar input:focus {
+        border-color: var(--hermes-gold);
+    }
+
+    .btn-enviar {
+        background: var(--hermes-gold);
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        width: 46px;
+        font-size: 1.1rem;
+    }
+
+    .btn-enviar:disabled {
+        opacity: 0.5;
+    }
+</style>
 {% endblock %}
 
-{% block body_content %}
-<div class="app-shell">
-
-    <aside class="sidebar">
-        <div class="brand">
-            <div class="brand-mark">H</div>
-            <div class="brand-text">
-                <strong>HERMES</strong>
-                <span>BUSINESS CONTROL</span>
-            </div>
+{% block content %}
+<div class="metric-card chat-wrapper">
+    <div class="chat-header">
+        <div class="avatar-ia"><i class="bi bi-stars"></i></div>
+        <div>
+            <h6 class="mb-0 text-white">HERMES AI</h6>
+            <small style="color: var(--hermes-text-muted);">Asistente virtual · en línea</small>
         </div>
-        <nav class="nav-group">
-            <a class="nav-item" href="{{ url_for('dashboard.index') }}"><span class="nav-icon"><i
-                        class="bi bi-speedometer2"></i></span>Dashboard</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-people"></i></span>Clientes</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-truck"></i></span>Proveedores</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-cart3"></i></span>Pedidos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-box-seam"></i></span>Envíos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-envelope"></i></span>Correos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-box"></i></span>Productos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-receipt"></i></span>Facturas</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-cash-stack"></i></span>Finanzas</a>
-            <a class="nav-item" href="{{ url_for('reportes.index') }}"><span class="nav-icon"><i
-                        class="bi bi-bar-chart"></i></span>Reportes</a>
-            <a class="nav-item active" href="{{ url_for('ia_hermes.index') }}"><span class="nav-icon"><i
-                        class="bi bi-robot"></i></span>IA HERMES</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-gear"></i></span>Ajustes</a>
-        </nav>
-    </aside>
+    </div>
 
-    <main class="main ia-main">
-        <div class="page-header">
-            <div>
-                <h1>HERMES AI</h1>
-                <p>Pregúntale a HERMES sobre el estado de tu negocio.</p>
-            </div>
+    <div class="chat-mensajes" id="chatMensajes">
+        <div class="msg msg-ia">
+            Hola {{ current_user.username }}, soy HERMES AI 👋 ¿En qué puedo ayudarte hoy?
         </div>
+    </div>
 
-        <div class="ia-layout">
+    <div class="chat-sugerencias" id="chatSugerencias">
+        <button class="chip-sugerencia">¿Cuántos pedidos tenemos atrasados?</button>
+        <button class="chip-sugerencia">Resumen de ventas de la semana</button>
+        <button class="chip-sugerencia">¿Qué clientes compran más seguido?</button>
+        <button class="chip-sugerencia">Compara envíos del mes anterior</button>
+    </div>
 
-            <aside class="ia-side">
-                <div class="ia-side-item active"><i class="bi bi-chat-dots"></i> Conversación</div>
-                <div class="ia-side-item"><i class="bi bi-bookmark"></i> Consultas guardadas</div>
-                <div class="ia-side-item"><i class="bi bi-file-earmark-bar-graph"></i> Reportes automáticos</div>
-                <div class="ia-side-item"><i class="bi bi-gear"></i> Configuración</div>
-            </aside>
-
-            <section class="ia-chat card">
-                <div class="ia-chat-header">
-                    <div class="ai-avatar">H</div>
-                    <p class="ia-greeting">Hola, {{ current_user.username }}. ¿En qué puedo ayudarte hoy?</p>
-                </div>
-
-                <div class="quick-chips">
-                    <button class="quick-chip" data-q="¿Qué pedidos tenemos atrasados?">¿Qué pedidos tenemos
-                        atrasados?</button>
-                    <button class="quick-chip" data-q="¿Cuánto le debemos a proveedores?">¿Cuánto le debemos a
-                        proveedores?</button>
-                    <button class="quick-chip" data-q="¿Qué clientes compraron más este mes?">¿Qué clientes compraron
-                        más este mes?</button>
-                </div>
-
-                <div class="chat-messages" id="chatMessages"></div>
-
-                <div class="chat-input-row">
-                    <input type="text" id="chatInput" placeholder="Escribe tu consulta aquí..." autocomplete="off">
-                    <button id="sendBtn" class="btn btn-primary" type="button"><i class="bi bi-send"></i></button>
-                </div>
-                <p class="ia-disclaimer">Los datos mostrados son actualizados automáticamente.</p>
-            </section>
-
-            <aside class="ia-suggestions card">
-                <p class="card-title">Sugerencias</p>
-                <div class="suggestion-card" data-q="¿Cuánto le debemos a proveedores?">¿Cuánto le debemos a
-                    proveedores?</div>
-                <div class="suggestion-card" data-q="¿Qué clientes compraron más este mes?">¿Qué clientes compraron más
-                    este mes?</div>
-                <div class="suggestion-card" data-q="Resumen de ventas de la semana">Resumen de ventas de la semana
-                </div>
-                <div class="suggestion-card" data-q="¿Qué envíos necesitan atención?">¿Qué envíos necesitan atención?
-                </div>
-                <div class="suggestion-card" data-q="Comparar ventas del mes anterior">Comparar ventas del mes anterior
-                </div>
-            </aside>
-        </div>
-    </main>
+    <div class="chat-input-bar">
+        <input type="text" id="chatInput" placeholder="Escribe tu consulta aquí..." autocomplete="off">
+        <button class="btn-enviar" id="btnEnviarChat"><i class="bi bi-send-fill"></i></button>
+    </div>
 </div>
 {% endblock %}
 

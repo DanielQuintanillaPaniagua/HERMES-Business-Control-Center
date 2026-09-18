@@ -3,18 +3,7 @@
 {% block title %}Iniciar sesión - HERMES{% endblock %}
 {% block body_class %}bg-dark-page{% endblock %}
 
-{% block body_content %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
+{% block content %}
 <div class="login-wrapper">
     <div class="login-card">
         <div class="text-center mb-4">

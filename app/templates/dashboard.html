@@ -2,49 +2,145 @@
 
 {% block title %}Dashboard - HERMES{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="welcome-banner mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-2">
     <div>
-        <h1 class="dashboard-title mb-1">Bienvenido, {{ current_user.username }} 👋</h1>
-        <p class="text-muted mb-0">Aquí tienes el resumen de tu negocio hoy.</p>
+        <h1 class="dashboard-title mb-1 h3">Resumen general</h1>
+        <p class="text-muted mb-0" style="color: var(--hermes-text-muted) !important;">Aquí tienes el estado general de
+            tu negocio.</p>
     </div>
-    <div class="welcome-banner-icon">
-        <i class="bi bi-graph-up-arrow"></i>
+    <div class="d-flex align-items-center gap-2">
+        <small style="color: var(--hermes-text-muted);" id="ultima-actualizacion">Actualizando...</small>
+        <button class="icon-btn" id="btnRefrescar" title="Actualizar ahora">
+            <i class="bi bi-arrow-clockwise" id="iconoRefrescar"></i>
+        </button>
     </div>
 </div>
 
-<!-- Las 6 tarjetas de métricas se generan por JS (dashboard.js) -->
-<div id="dashboard-stats" class="row g-3"></div>
+<div id="alertaErrorGlobal" class="alert alert-danger d-none d-flex justify-content-between align-items-center"
+    role="alert">
+    <span><i class="bi bi-exclamation-triangle-fill me-2"></i>No se pudo conectar con el servidor.</span>
+    <button class="btn btn-sm btn-danger" id="btnReintentar">Reintentar</button>
+</div>
 
+<!-- Tarjetas de métricas -->
+<div class="row g-3" id="contenedorMetricas">
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="clientes">
+            <div class="metric-icon-circle icon-clientes"><i class="bi bi-people-fill"></i></div>
+            <h6>Clientes</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="proveedores">
+            <div class="metric-icon-circle icon-proveedores"><i class="bi bi-truck"></i></div>
+            <h6>Proveedores</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="productos">
+            <div class="metric-icon-circle icon-productos"><i class="bi bi-box-seam-fill"></i></div>
+            <h6>Productos</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="pedidos">
+            <div class="metric-icon-circle icon-pedidos"><i class="bi bi-cart-check-fill"></i></div>
+            <h6>Pedidos</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="envios">
+            <div class="metric-icon-circle icon-envios"><i class="bi bi-send-fill"></i></div>
+            <h6>Envíos</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-2">
+        <div class="metric-card metric-skeleton" data-metric="ingresos" data-currency="true">
+            <div class="metric-icon-circle icon-ingresos"><i class="bi bi-cash-coin"></i></div>
+            <h6>Ingresos (Mes)</h6>
+            <h3 class="metric-value" data-val="0">—</h3>
+            <small class="metric-change" style="color: var(--hermes-text-muted);">—</small>
+        </div>
+    </div>
+</div>
+
+<!-- Gráficas -->
 <div class="row g-3 mt-1">
-    <div class="col-lg-8">
-        <div class="metric-card metric-card-chart h-100">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="text-muted mb-0"><i class="bi bi-graph-up me-1"></i> Ventas de los últimos 30 días</h6>
+    <div class="col-lg-7">
+        <div class="metric-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <h6 class="mb-1">Ventas</h6>
+                    <small style="color: var(--hermes-text-muted);">Total en USD</small>
+                    <h2 class="text-white fw-bold mb-0" id="ventasTotalTexto">—</h2>
+                    <small id="ventasVsPeriodo" class="text-success">—</small>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" id="selectorPeriodo">
+                    <button type="button" class="btn btn-outline-secondary" data-dias="7">7d</button>
+                    <button type="button" class="btn btn-outline-secondary active" data-dias="30">30d</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dias="90">90d</button>
+                </div>
             </div>
-            <canvas id="chart-ventas"></canvas>
+            <div class="chart-container">
+                <canvas id="ventasChart" height="100"></canvas>
+                <div class="chart-empty d-none" id="ventasEmpty">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <p class="mb-0">Sin datos de ventas para este periodo</p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="metric-card metric-card-chart h-100">
-            <h6 class="text-muted mb-3"><i class="bi bi-pie-chart-fill me-1"></i> Pedidos por estado</h6>
-            <canvas id="chart-pedidos"></canvas>
+    <div class="col-lg-5">
+        <div class="metric-card h-100">
+            <h6 class="mb-3">Pedidos por estado</h6>
+            <div class="d-flex align-items-center gap-4">
+                <div class="chart-container" style="width:180px; height:180px; flex-shrink:0;">
+                    <canvas id="estadoChart"></canvas>
+                    <div class="donut-center-label">
+                        <div class="donut-total" id="donutTotal">—</div>
+                        <div class="donut-caption">Total</div>
+                    </div>
+                </div>
+                <div class="leyenda-estado" id="leyendaEstado">
+                    <div class="text-muted small">Cargando...</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row g-3 mt-1">
-    <div class="col-12">
-        <div id="dashboard-alerts"></div>
+    <div class="col-lg-6">
+        <div class="metric-card">
+            <h6 class="mb-3">Actividades recientes</h6>
+            <div id="listaActividades">
+                <div class="text-muted small">Cargando...</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="metric-card">
+            <h6 class="mb-3">Recordatorios</h6>
+            <div id="listaAlertas">
+                <div class="text-muted small">Cargando...</div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

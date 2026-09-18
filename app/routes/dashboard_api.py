@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import random
 
 # ⚠️ TEMPORAL: esto simula las APIs que prometió Daniel
-# (/api/dashboard/stats, /sales-chart, /alerts) mientras las sube de verdad.
+# (/api/dashboard/stats, /sales-chart, /alerts, /activities) mientras las sube de verdad.
 # Cuando él suba su app/routes/dashboard_api.py real, BORRA este archivo
 # y usa el suyo — no deben coexistir los dos con el mismo nombre.
 
@@ -30,7 +30,8 @@ def stats():
 @bp.route('/sales-chart')
 @login_required
 def sales_chart():
-    dias = 30
+    from flask import request
+    dias = int(request.args.get('dias', 30))
     hoy = datetime.now()
     labels = [(hoy - timedelta(days=i)).strftime('%d/%m') for i in range(dias - 1, -1, -1)]
 
@@ -62,5 +63,18 @@ def alerts():
             {"tipo": "danger",  "mensaje": "7 pedidos atrasados", "url": "#"},
             {"tipo": "warning", "mensaje": "3 envíos requieren atención", "url": "#"},
             {"tipo": "info",    "mensaje": "5 correos sin leer", "url": "#"},
+        ]
+    })
+
+
+@bp.route('/activities')
+@login_required
+def activities():
+    return jsonify({
+        "success": True,
+        "activities": [
+            {"tipo": "pedido", "texto": "Pedido #1024 realizado", "tiempo": "Hace 10 min"},
+            {"tipo": "correo", "texto": "Nuevo correo de veritas@proveedor.com", "tiempo": "Hace 25 min"},
+            {"tipo": "envio",  "texto": "Envío #ENV-1023 marcado como entregado", "tiempo": "Hace 1 hora"},
         ]
     })
