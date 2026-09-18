@@ -57,10 +57,10 @@ def create_app():
     from app.routes.products import bp as products_bp 
     from app.routes.orders import bp as orders_bp
     from app.routes.shipments import bp as shipments_bp
-    from app.routes.clients_ui import bp as clients_ui_bp    
+    from app.routes.clients_ui import bp as clients_ui_bp
+    from app.routes.products_ui import bp as products_ui_bp    
     from app.routes.dashboard_api import bp as dashboard_api_bp
-
-
+    
 
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -73,6 +73,7 @@ def create_app():
     app.register_blueprint(orders_bp)
     app.register_blueprint(shipments_bp)
     app.register_blueprint(clients_ui_bp)
+    app.register_blueprint(products_ui_bp)
     app.register_blueprint(dashboard_api_bp)
 
 
