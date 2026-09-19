@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Editar' if cliente_id else 'Nuevo' }} Cliente - HERMES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
+{% endblock %}
+
+{% block body_content %}
+<div class="container-fluid clientes-page">
+
+    <div class="mb-4">
+        <a href="{{ url_for('clients_ui.list_page') }}" class="text-decoration-none text-muted">
+            <i class="bi bi-arrow-left"></i> Volver a clientes
+        </a>
+    </div>
+
+    <div class="form-cliente">
+        <h2>{{ 'Editar Cliente' if cliente_id else 'Nuevo Cliente' }}</h2>
+        <p class="text-muted mb-4">
+            {{ 'Modifica los datos del cliente' if cliente_id else 'Rellena los datos para crear un nuevo cliente' }}
+        </p>
+
+        <form id="form-cliente" {% if cliente_id %}data-cliente-id="{{ cliente_id }}" {% endif %}>
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Distribuidora López"
+                    required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="cliente@empresa.com"
+                    required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="+503 1234 5678">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="ciudad" class="form-label">Ciudad</label>
+                    <input type="text" id="ciudad" name="ciudad" class="form-control" placeholder="San Salvador">
+                </div>
+            </div>
+
+            {% if cliente_id %}
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" name="estado" class="form-select">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+            </div>
+            {% endif %}
+
+            <div class="form-actions">
+                <a href="{{ url_for('clients_ui.list_page') }}" class="btn-cancelar">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-gold">
+                    <i class="bi bi-check-circle"></i>
+                    {{ 'Guardar cambios' if cliente_id else 'Crear cliente' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/clients.js') }}"></script>
+{% endblock %}

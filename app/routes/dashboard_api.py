@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Blueprint, jsonify
 from flask_login import login_required
 from datetime import datetime, timedelta
@@ -7,10 +8,20 @@ import random
 # (/api/dashboard/stats, /sales-chart, /alerts, /activities) mientras las sube de verdad.
 # Cuando él suba su app/routes/dashboard_api.py real, BORRA este archivo
 # y usa el suyo — no deben coexistir los dos con el mismo nombre.
+=======
+from flask import Blueprint, jsonify, request
+from flask_login import login_required
+from app.services.analytics import (
+    get_dashboard_stats,
+    get_sales_chart_data,
+    get_alerts
+)
+>>>>>>> origin/daniel-backend
 
 bp = Blueprint('dashboard_api', __name__, url_prefix='/api/dashboard')
 
 
+<<<<<<< HEAD
 @bp.route('/stats')
 @login_required
 def stats():
@@ -78,3 +89,43 @@ def activities():
             {"tipo": "envio",  "texto": "Envío #ENV-1023 marcado como entregado", "tiempo": "Hace 1 hora"},
         ]
     })
+=======
+# ESTADÍSTICAS GENERALES
+# GET /api/dashboard/stats
+@bp.route('/stats', methods=['GET'])
+@login_required
+def stats():
+    """Devuelve las métricas principales del dashboard."""
+    try:
+        datos = get_dashboard_stats()
+        return jsonify({'success': True, **datos})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+# GRÁFICA DE VENTAS
+# GET /api/dashboard/sales-chart?dias=30
+@bp.route('/sales-chart', methods=['GET'])
+@login_required
+def sales_chart():
+    """Devuelve los datos de la gráfica de ventas por día."""
+    try:
+        dias = int(request.args.get('dias', 30))
+        datos = get_sales_chart_data(dias=dias)
+        return jsonify({'success': True, **datos})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+# ALERTAS DEL NEGOCIO
+# GET /api/dashboard/alerts
+@bp.route('/alerts', methods=['GET'])
+@login_required
+def alerts():
+    """Devuelve las alertas activas (pedidos atrasados, deudas, stock bajo)."""
+    try:
+        alertas = get_alerts()
+        return jsonify({'success': True, 'alertas': alertas, 'total': len(alertas)})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+>>>>>>> origin/daniel-backend

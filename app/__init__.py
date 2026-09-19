@@ -56,7 +56,17 @@ def create_app():
     from app.routes.products import bp as products_bp
     from app.routes.orders import bp as orders_bp
     from app.routes.shipments import bp as shipments_bp
+<<<<<<< HEAD
     from app.routes.placeholder import bp as placeholder_bp
+=======
+    from app.routes.clients_ui import bp as clients_ui_bp    
+    from app.routes.dashboard_api import bp as dashboard_api_bp
+    from app.routes.ai_api import bp as ai_api_bp
+
+
+
+
+>>>>>>> origin/daniel-backend
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp)
@@ -68,6 +78,15 @@ def create_app():
     app.register_blueprint(products_bp)
     app.register_blueprint(orders_bp)
     app.register_blueprint(shipments_bp)
+<<<<<<< HEAD
     app.register_blueprint(placeholder_bp)
+=======
+    app.register_blueprint(clients_ui_bp)
+    app.register_blueprint(dashboard_api_bp)
+    app.register_blueprint(ai_api_bp)
+
+
+
+>>>>>>> origin/daniel-backend
 
     return app
