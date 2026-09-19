@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Editar' if envio_id else 'Nuevo' }} Envío - HERMES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shipments.css') }}">
+{% endblock %}
+
+{% block body_content %}
+<div class="container-fluid envios-page" data-bs-theme="dark">
+
+    <div class="mb-4">
+        <a href="{{ url_for('shipments_ui.list_page') }}" class="text-decoration-none text-muted">
+            <i class="bi bi-arrow-left"></i> Volver a envíos
+        </a>
+    </div>
+
+    <div class="form-envio">
+        <h2>{{ 'Editar Envío' if envio_id else 'Nuevo Envío' }}</h2>
+        <p class="text-muted mb-4">
+            {{ 'Modifica los datos del envío' if envio_id else 'Rellena los datos para registrar un nuevo envío' }}
+        </p>
+
+        <form id="form-envio" {% if envio_id %}data-envio-id="{{ envio_id }}" {% endif %}>
+
+            <div class="mb-3">
+                <label for="pedido_id" class="form-label">Pedido <span class="text-danger">*</span></label>
+                <select id="pedido_id" name="pedido_id" class="form-select" required>
+                    <option value="">Selecciona un pedido...</option>
+                </select>
+                {% if envio_id %}
+                <div class="form-text">El pedido no se puede cambiar una vez creado el envío.</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="direccion_envio" class="form-label">Dirección de envío <span
+                        class="text-danger">*</span></label>
+                <input type="text" id="direccion_envio" name="direccion_envio" class="form-control" maxlength="200"
+                    placeholder="Ej: Col. Escalón, Calle 5 #123" required autofocus>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="ciudad" class="form-label">Ciudad</label>
+                    <input type="text" id="ciudad" name="ciudad" class="form-control" maxlength="80"
+                        placeholder="San Salvador">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="transportista" class="form-label">Transportista</label>
+                    <input type="text" id="transportista" name="transportista" class="form-control" maxlength="100"
+                        placeholder="Ej: Cargo Express">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="numero_guia" class="form-label">Número de guía</label>
+                    <input type="text" id="numero_guia" name="numero_guia" class="form-control text-uppercase"
+                        maxlength="60" placeholder="GUIA-0001">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="fecha_entrega_estimada" class="form-label">Entrega estimada</label>
+                    <input type="date" id="fecha_entrega_estimada" name="fecha_entrega_estimada" class="form-control">
+                </div>
+            </div>
+
+            {% if envio_id %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fecha_envio" class="form-label">Fecha de envío</label>
+                    <input type="date" id="fecha_envio" name="fecha_envio" class="form-control">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select id="estado" name="estado" class="form-select">
+                        <option value="Preparando">Preparando</option>
+                        <option value="En camino">En camino</option>
+                        <option value="Entregado">Entregado</option>
+                        <option value="Retrasado">Retrasado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="form-actions">
+                <a href="{{ url_for('shipments_ui.list_page') }}" class="btn-cancelar">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-gold">
+                    <i class="bi bi-check-circle"></i>
+                    {{ 'Guardar cambios' if envio_id else 'Crear envío' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/shipments.js') }}"></script>
+{% endblock %}
