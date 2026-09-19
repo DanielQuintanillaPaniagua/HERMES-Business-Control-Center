@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle Producto - HERMES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock %}
+
+{% block body_content %}
+<div class="container-fluid productos-page" data-bs-theme="dark">
+
+    <div class="mb-4">
+        <a href="{{ url_for('products_ui.list_page') }}" class="text-decoration-none text-muted">
+            <i class="bi bi-arrow-left"></i> Volver a productos
+        </a>
+    </div>
+
+    <div class="detalle-producto">
+        <div class="detalle-card" id="detalle-producto-card" data-producto-id="{{ producto_id }}">
+            <div class="detalle-body text-center py-5">
+                <div class="spinner-border text-warning" role="status"></div>
+                <p class="mt-3 text-muted">Cargando producto...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/products.js') }}"></script>
+{% endblock %}

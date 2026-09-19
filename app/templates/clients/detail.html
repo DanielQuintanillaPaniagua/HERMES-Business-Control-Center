@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Detalle Cliente - HERMES{% endblock %}
+{% block body_class %}bg-dark-page{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/clients.css') }}">
@@ -30,7 +31,7 @@
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/clients.js') }}"></script>
 <script>
-    // Cargar el detalle del cliente al abrir la página
+    // Cargar el detalle del cliente al abrir la pÃ¡gina
     document.addEventListener('DOMContentLoaded', async () => {
         const clienteId = {{ cliente_id }
     };
@@ -58,7 +59,7 @@
             day: '2-digit', month: '2-digit', year: 'numeric',
             hour: '2-digit', minute: '2-digit'
         })
-        : '—';
+        : 'â€”';
 
     contenedor.innerHTML = `
             <div class="detalle-header">
@@ -75,12 +76,12 @@
                     <span class="valor">${cliente.email}</span>
                 </div>
                 <div class="detalle-fila">
-                    <span class="label">Teléfono</span>
-                    <span class="valor">${cliente.telefono || '—'}</span>
+                    <span class="label">TelÃ©fono</span>
+                    <span class="valor">${cliente.telefono || 'â€”'}</span>
                 </div>
                 <div class="detalle-fila">
                     <span class="label">Ciudad</span>
-                    <span class="valor">${cliente.ciudad || '—'}</span>
+                    <span class="valor">${cliente.ciudad || 'â€”'}</span>
                 </div>
                 <div class="detalle-fila">
                     <span class="label">Fecha de registro</span>

@@ -1,4 +1,5 @@
-/* --- Página de listado --- */
+﻿/* HERMES - Clientes (tema oscuro) */
+
 .clientes-page {
     padding: 20px;
 }
@@ -17,21 +18,21 @@
 }
 
 .clientes-header p {
-    color: #888;
+    color: #999;
     margin: 4px 0 0 0;
     font-size: 0.9rem;
 }
 
-/* --- Tabla de clientes --- */
 .tabla-clientes {
-    background: #fff;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .tabla-clientes thead {
-    background-color: #1a1a1a;
+    background-color: #0d0d0d;
     color: #d4af37;
 }
 
@@ -42,23 +43,24 @@
     font-size: 0.8rem;
     letter-spacing: 0.5px;
     border: none;
+    color: #d4af37;
 }
 
 .tabla-clientes tbody td {
     padding: 14px 16px;
     vertical-align: middle;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #2a2a2a;
+    color: #e0e0e0;
 }
 
 .tabla-clientes tbody tr:hover {
-    background-color: #fafafa;
+    background-color: #222;
 }
 
 .tabla-clientes tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* --- Badges de estado --- */
 .badge-activo {
     background-color: #28a745;
     color: #fff;
@@ -77,7 +79,6 @@
     font-weight: 600;
 }
 
-/* --- Botones de acción --- */
 .btn-accion {
     display: inline-flex;
     align-items: center;
@@ -85,9 +86,9 @@
     width: 32px;
     height: 32px;
     border-radius: 6px;
-    border: 1px solid #ddd;
-    background: #fff;
-    color: #666;
+    border: 1px solid #333;
+    background: #2a2a2a;
+    color: #ccc;
     transition: all 0.15s ease;
     text-decoration: none;
     margin: 0 2px;
@@ -96,16 +97,15 @@
 .btn-accion:hover {
     border-color: #d4af37;
     color: #d4af37;
-    background: #fffaf0;
+    background: #333;
 }
 
 .btn-accion.btn-eliminar:hover {
     border-color: #dc3545;
     color: #dc3545;
-    background: #fff5f5;
+    background: #3a1515;
 }
 
-/* --- Botón dorado principal --- */
 .btn-gold {
     background-color: #d4af37;
     color: #000;
@@ -127,7 +127,6 @@
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
-/* --- Estado vacío --- */
 .estado-vacio {
     text-align: center;
     padding: 60px 20px;
@@ -141,22 +140,22 @@
 
 .estado-vacio h4 {
     margin-top: 20px;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .estado-vacio p {
-    color: #888;
+    color: #999;
     margin-bottom: 20px;
 }
 
-/* --- Formulario de cliente --- */
 .form-cliente {
     max-width: 700px;
     margin: 0 auto;
-    background: #fff;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
     padding: 32px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .form-cliente h2 {
@@ -166,23 +165,30 @@
 
 .form-cliente .form-label {
     font-weight: 600;
-    color: #333;
+    color: #e0e0e0;
     margin-bottom: 6px;
 }
 
 .form-cliente .form-control,
 .form-cliente .form-select {
-    border: 1px solid #ddd;
+    background-color: #0d0d0d;
+    border: 1px solid #333;
+    color: #fff;
     border-radius: 8px;
     padding: 10px 14px;
-    transition: all 0.15s ease;
 }
 
 .form-cliente .form-control:focus,
 .form-cliente .form-select:focus {
+    background-color: #0d0d0d;
     border-color: #d4af37;
+    color: #fff;
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
     outline: none;
+}
+
+.form-cliente .form-control::placeholder {
+    color: #666;
 }
 
 .form-cliente .form-actions {
@@ -191,12 +197,12 @@
     gap: 12px;
     margin-top: 24px;
     padding-top: 20px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #2a2a2a;
 }
 
 .btn-cancelar {
-    background: #f0f0f0;
-    color: #666;
+    background: #2a2a2a;
+    color: #ccc;
     padding: 10px 20px;
     border-radius: 8px;
     border: none;
@@ -205,29 +211,28 @@
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    transition: all 0.15s ease;
 }
 
 .btn-cancelar:hover {
-    background: #e0e0e0;
-    color: #333;
+    background: #333;
+    color: #fff;
 }
 
-/* --- Página de detalle --- */
 .detalle-cliente {
     max-width: 800px;
     margin: 0 auto;
 }
 
 .detalle-card {
-    background: #fff;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
 .detalle-header {
-    background: #1a1a1a;
+    background: #0d0d0d;
     color: #d4af37;
     padding: 20px 24px;
     display: flex;
@@ -242,12 +247,13 @@
 
 .detalle-body {
     padding: 24px;
+    background: #1a1a1a;
 }
 
 .detalle-fila {
     display: flex;
     padding: 12px 0;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #2a2a2a;
 }
 
 .detalle-fila:last-child {
@@ -257,38 +263,98 @@
 .detalle-fila .label {
     width: 180px;
     font-weight: 600;
-    color: #666;
+    color: #888;
     flex-shrink: 0;
 }
 
 .detalle-fila .valor {
-    color: #333;
+    color: #e0e0e0;
     flex-grow: 1;
 }
 
 .detalle-footer {
     padding: 16px 24px;
-    background: #fafafa;
+    background: #0d0d0d;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #2a2a2a;
 }
 
-/* --- Responsive --- */
-@media (max-width: 768px) {
-    .clientes-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
+body {
+    background-color: #0d0d0d !important;
+}
+/* ============================================
+   OVERRIDE FORZADO DE TABLAS BOOTSTRAP
+   ============================================ */
 
-    .detalle-fila {
-        flex-direction: column;
-    }
+/* Contenedor principal */
+#lista-clientes {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+}
 
-    .detalle-fila .label {
-        width: auto;
-        margin-bottom: 4px;
-    }
+/* Tabla de Bootstrap - forzar tema oscuro */
+#lista-clientes .table,
+#lista-clientes table {
+    --bs-table-bg: #1a1a1a !important;
+    --bs-table-color: #e0e0e0 !important;
+    --bs-table-hover-bg: #222 !important;
+    --bs-table-hover-color: #ffffff !important;
+    --bs-table-border-color: #2a2a2a !important;
+    --bs-table-striped-bg: #1a1a1a !important;
+    margin-bottom: 0 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Encabezado */
+#lista-clientes .table thead,
+#lista-clientes table thead {
+    background-color: #0d0d0d !important;
+}
+
+#lista-clientes .table thead th,
+#lista-clientes table thead th {
+    background-color: #0d0d0d !important;
+    color: #d4af37 !important;
+    border-color: #2a2a2a !important;
+    padding: 14px 16px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Cuerpo */
+#lista-clientes .table tbody,
+#lista-clientes table tbody {
+    background-color: #1a1a1a !important;
+}
+
+#lista-clientes .table tbody tr,
+#lista-clientes table tbody tr {
+    background-color: #1a1a1a !important;
+    border-bottom: 1px solid #2a2a2a !important;
+}
+
+#lista-clientes .table tbody tr:hover,
+#lista-clientes table tbody tr:hover {
+    background-color: #222 !important;
+}
+
+#lista-clientes .table tbody td,
+#lista-clientes table tbody td {
+    background-color: transparent !important;
+    color: #e0e0e0 !important;
+    border-color: #2a2a2a !important;
+    padding: 14px 16px !important;
+    vertical-align: middle !important;
+}
+
+/* Texto en negrita dentro de la tabla */
+#lista-clientes .table tbody td strong,
+#lista-clientes table tbody td strong {
+    color: #ffffff !important;
 }

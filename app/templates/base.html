@@ -13,6 +13,7 @@
 
     <!-- CSS propio de HERMES -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
 
     {% block extra_css %}{% endblock %}
 </head>
@@ -20,7 +21,10 @@
 <body class="{% block body_class %}{% endblock %}">
 
     <nav class="navbar navbar-expand-lg navbar-dark navbar-hermes">
-        <div class="container">
+        <div class="container-fluid">
+            <button class="btn btn-sm btn-outline-light d-lg-none me-2" id="btnToggleSidebar">
+                <i class="bi bi-list"></i>
+            </button>
             <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard.index') }}">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="HERMES" height="38" class="me-2">
                 HERMES
@@ -39,7 +43,66 @@
         </div>
     </nav>
 
-    {% block body_content %}
+    {% if current_user.is_authenticated %}
+    <div class="hermes-layout">
+        <aside class="hermes-sidebar" id="hermesSidebar">
+            <nav>
+                <a href="{{ url_for('dashboard.index') }}"
+                    class="nav-item {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
+                    <i class="bi bi-grid-1x2-fill"></i> Dashboard
+                </a>
+                <a href="{{ url_for('clients_ui.list_page') }}"
+                    class="nav-item {% if 'clients' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-people"></i> Clientes
+                </a>
+                <a href="#" class="nav-item"><i class="bi bi-truck"></i> Proveedores</a>
+                <a href="#" class="nav-item"><i class="bi bi-cart"></i> Pedidos</a>
+                <a href="{{ url_for('shipments_ui.list_page') }}"
+                    class="nav-item {% if 'shipments' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-send"></i> Envíos
+                </a>
+                <a href="#" class="nav-item"><i class="bi bi-envelope"></i> Correos</a>
+                <a href="{{ url_for('products_ui.list_page') }}"
+                    class="nav-item {% if 'products' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-box-seam"></i> Productos
+                </a>
+                <a href="#" class="nav-item"><i class="bi bi-file-earmark-text"></i> Facturas</a>
+                <a href="#" class="nav-item"><i class="bi bi-cash-coin"></i> Finanzas</a>
+                <a href="/reportes" class="nav-item {% if 'reportes' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-bar-chart"></i> Reportes
+                </a>
+                <a href="/ia-hermes" class="nav-item {% if 'ia_hermes' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-robot"></i> IA HERMES
+                </a>
+                <a href="#" class="nav-item"><i class="bi bi-gear"></i> Ajustes</a>
+            </nav>
+        </aside>
+
+        <main class="hermes-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block body_content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        const btnToggle = document.getElementById('btnToggleSidebar');
+        if (btnToggle) {
+            btnToggle.addEventListener('click', () => {
+                document.getElementById('hermesSidebar').classList.toggle('open');
+            });
+        }
+    </script>
+    {% else %}
     <div class="container mt-4">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -54,11 +117,9 @@
 
         {% block content %}{% endblock %}
     </div>
-    {% endblock %}
-    <!-- Bootstrap 5 JS (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% endif %}
 
-    <!-- JS propio de HERMES -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     {% block extra_js %}{% endblock %}

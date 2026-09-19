@@ -1,0 +1,104 @@
+﻿/* dashboard.css — Tema oscuro HERMES */
+.welcome-banner {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2416 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.welcome-banner::before {
+    content: "";
+    position: absolute;
+    top: -40%; right: -5%;
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.welcome-banner .dashboard-title { color: #d4af37 !important; }
+.welcome-banner p { color: #cfcfcf !important; }
+.welcome-banner-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(212, 175, 55, 0.15);
+    color: #d4af37;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; flex-shrink: 0; z-index: 1;
+}
+.metric-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    padding: 22px;
+    border-top: 3px solid transparent;
+    transition: all 0.25s ease;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease forwards;
+    position: relative;
+}
+.metric-card:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    border-color: #d4af37;
+}
+.metric-card[data-key="clientes"] { border-top-color: #0d6efd; }
+.metric-card[data-key="proveedores"] { border-top-color: #0dcaf0; }
+.metric-card[data-key="productos"] { border-top-color: #6c757d; }
+.metric-card[data-key="pedidos"] { border-top-color: #198754; }
+.metric-card[data-key="envios"] { border-top-color: #0dcaf0; }
+.metric-card[data-key="ingresos"] { border-top-color: #d4af37; }
+.metric-card-chart { border-top: 3px solid #d4af37; }
+.metric-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.metric-value {
+    font-weight: 800; font-size: 1.7rem;
+    color: #e0e0e0; margin-top: 2px;
+    letter-spacing: -0.5px;
+}
+.metric-card .text-muted { color: #888 !important; }
+.text-gold { color: #d4af37 !important; }
+.bg-gold { background-color: rgba(212, 175, 55, 0.12) !important; }
+#dashboard-stats>div:nth-child(1) .metric-card { animation-delay: 0.05s; }
+#dashboard-stats>div:nth-child(2) .metric-card { animation-delay: 0.10s; }
+#dashboard-stats>div:nth-child(3) .metric-card { animation-delay: 0.15s; }
+#dashboard-stats>div:nth-child(4) .metric-card { animation-delay: 0.20s; }
+#dashboard-stats>div:nth-child(5) .metric-card { animation-delay: 0.25s; }
+#dashboard-stats>div:nth-child(6) .metric-card { animation-delay: 0.30s; }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.alerta-item {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease forwards;
+    border-radius: 8px;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    transition: background 0.2s ease;
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    color: #e0e0e0 !important;
+}
+.alerta-item:hover { background: #222 !important; }
+.alerta-item.alert-warning { border-left: 4px solid #ffb020 !important; }
+.alerta-item.alert-danger { border-left: 4px solid #e74c3c !important; }
+.alerta-item.alert-info { border-left: 4px solid #4d94ff !important; }
+.alerta-item.alert-success { border-left: 4px solid #2ecc71 !important; }
+#chart-ventas, #chart-pedidos { max-height: 320px; }
+.metric-card-chart .text-muted { color: #888 !important; }
+@media (max-width: 576px) {
+    .welcome-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+}

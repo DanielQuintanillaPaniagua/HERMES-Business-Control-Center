@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Editar' if producto_id else 'Nuevo' }} Producto - HERMES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock %}
+
+{% block body_content %}
+<div class="container-fluid productos-page" data-bs-theme="dark">
+
+    <div class="mb-4">
+        <a href="{{ url_for('products_ui.list_page') }}" class="text-decoration-none text-muted">
+            <i class="bi bi-arrow-left"></i> Volver a productos
+        </a>
+    </div>
+
+    <div class="form-producto">
+        <h2>{{ 'Editar Producto' if producto_id else 'Nuevo Producto' }}</h2>
+        <p class="text-muted mb-4">
+            {{ 'Modifica los datos del producto' if producto_id else 'Rellena los datos para crear un nuevo producto' }}
+        </p>
+
+        <form id="form-producto" {% if producto_id %}data-producto-id="{{ producto_id }}" {% endif %}>
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                <input type="text" id="nombre" name="nombre" class="form-control" maxlength="150"
+                    placeholder="Ej: Cable HDMI 2 m" required autofocus>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="sku" class="form-label">SKU <span class="text-danger">*</span></label>
+                    <input type="text" id="sku" name="sku" class="form-control text-uppercase" maxlength="50"
+                        placeholder="HDMI-002" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="categoria" class="form-label">Categoría</label>
+                    <input type="text" id="categoria" name="categoria" class="form-control" maxlength="80"
+                        placeholder="Accesorios">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" rows="3" maxlength="300"
+                    placeholder="Detalles del producto (máx. 300 caracteres)"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="precio" class="form-label">Precio (USD) <span class="text-danger">*</span></label>
+                    <input type="number" id="precio" name="precio" class="form-control" min="0" step="0.01"
+                        placeholder="0.00" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="stock" class="form-label">Stock <span class="text-danger">*</span></label>
+                    <input type="number" id="stock" name="stock" class="form-control" min="0" step="1" placeholder="0"
+                        required>
+                </div>
+            </div>
+
+            {% if producto_id %}
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" name="estado" class="form-select">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+            </div>
+            {% endif %}
+
+            <div class="form-actions">
+                <a href="{{ url_for('products_ui.list_page') }}" class="btn-cancelar">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-gold">
+                    <i class="bi bi-check-circle"></i>
+                    {{ 'Guardar cambios' if producto_id else 'Crear producto' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/products.js') }}"></script>
+{% endblock %}
