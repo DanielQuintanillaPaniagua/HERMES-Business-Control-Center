@@ -1,0 +1,30 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Proveedores - HERMES{% endblock %}
+
+{% block body_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/suppliers.css') }}">
+
+<div class="page-header">
+    <h1><i class="bi bi-truck"></i> Proveedores</h1>
+    <a href="{{ url_for('suppliers_ui.new_supplier') }}" class="btn-gold">
+        <i class="bi bi-plus-lg"></i> Nuevo proveedor
+    </a>
+</div>
+
+<div class="filtros-bar">
+    <input type="text" id="buscador" class="form-control" placeholder="Buscar proveedor...">
+</div>
+
+<div id="proveedores-grid" class="proveedores-grid">
+    <p class="cargando">Cargando proveedores...</p>
+</div>
+
+<script src="{{ url_for('static', filename='js/suppliers.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', cargarProveedores);
+    document.getElementById('buscador').addEventListener('input', (e) => {
+        filtrarProveedores(e.target.value);
+    });
+</script>
+{% endblock %}

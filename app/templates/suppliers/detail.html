@@ -1,0 +1,91 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Detalle Proveedor - HERMES{% endblock %}
+
+{% block body_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/suppliers.css') }}">
+
+<div class="page-header">
+    <a href="{{ url_for('suppliers_ui.list_suppliers') }}" class="btn-outline">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div id="detalle-proveedor-container">
+    <p class="cargando">Cargando proveedor...</p>
+</div>
+
+<script src="{{ url_for('static', filename='js/suppliers.js') }}"></script>
+<script>
+    const proveedorId = "{{ supplier_id }}";
+
+    async function cargarDetalleProveedor() {
+        try {
+            const resp = await fetch(`/api/suppliers/${proveedorId}`);
+            if (!resp.ok) throw new Error('No se pudo cargar el proveedor');
+            const data = await resp.json();
+            const proveedor = data.proveedor || data;
+            renderDetalleProveedor(proveedor);
+        } catch (err) {
+            document.getElementById('detalle-proveedor-container').innerHTML =
+                `<p class="error">Error al cargar el proveedor.</p>`;
+            console.error(err);
+        }
+    }
+
+    function renderDetalleProveedor(proveedor) {
+        const fecha = proveedor.created_at
+            ? new Date(proveedor.created_at).toLocaleDateString('es-ES')
+            : '-';
+
+        const saldo = proveedor.saldo_pendiente > 0
+            ? `<span class="text-danger fw-bold">$${proveedor.saldo_pendiente.toFixed(2)}</span>`
+            : `<span class="text-success">$0.00</span>`;
+
+        document.getElementById('detalle-proveedor-container').innerHTML = `
+            <div class="detalle-card">
+                <div class="detalle-header">
+                    <h2>${proveedor.nombre}</h2>
+                </div>
+                <div class="detalle-body">
+                    <div class="detalle-item">
+                        <span class="label">Contacto</span>
+                        <span class="valor">${proveedor.contacto || '-'}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="label">Telefono</span>
+                        <span class="valor">${proveedor.telefono || '-'}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="label">Email</span>
+                        <span class="valor">${proveedor.email || '-'}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="label">Direccion</span>
+                        <span class="valor">${proveedor.direccion || '-'}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="label">Saldo pendiente</span>
+                        <span class="valor">${saldo}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <span class="label">Fecha de registro</span>
+                        <span class="valor">${fecha}</span>
+                    </div>
+                </div>
+                <div class="detalle-footer">
+                    <button onclick="eliminarProveedor(${proveedor.id}, '${proveedor.nombre}')"
+                            class="btn-outline-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                    <a href="/suppliers/${proveedor.id}/edit" class="btn-gold">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarDetalleProveedor);
+</script>
+{% endblock %}

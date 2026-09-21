@@ -63,6 +63,7 @@ def create_app():
     from app.routes.products_ui import bp as products_ui_bp
     from app.routes.shipments_ui import bp as shipments_ui_bp
     from app.routes.dashboard_activities import bp as dashboard_activities_bp
+    from app.routes.suppliers_ui import suppliers_ui                
 
 
 
@@ -84,7 +85,7 @@ def create_app():
     app.register_blueprint(products_ui_bp)
     app.register_blueprint(shipments_ui_bp)
     app.register_blueprint(dashboard_activities_bp)
-
+    app.register_blueprint(suppliers_ui)                          
 
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -45,36 +45,44 @@
 
     {% if current_user.is_authenticated %}
     <div class="hermes-layout">
-        <aside class="hermes-sidebar" id="hermesSidebar">
+                <aside class="hermes-sidebar" id="hermesSidebar">
             <nav>
-                <a href="{{ url_for('dashboard.index') }}"
-                    class="nav-item {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
+                <a href="{{ url_for('dashboard.index') }}" class="nav-item {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
                     <i class="bi bi-grid-1x2-fill"></i> Dashboard
                 </a>
-                <a href="{{ url_for('clients_ui.list_page') }}"
-                    class="nav-item {% if 'clients' in request.endpoint %}active{% endif %}">
+                <a href="{{ url_for('clients_ui.list_page') }}" class="nav-item {% if 'clients' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-people"></i> Clientes
                 </a>
-                <a href="#" class="nav-item"><i class="bi bi-truck"></i> Proveedores</a>
-                <a href="#" class="nav-item"><i class="bi bi-cart"></i> Pedidos</a>
-                <a href="{{ url_for('shipments_ui.list_page') }}"
-                    class="nav-item {% if 'shipments' in request.endpoint %}active{% endif %}">
-                    <i class="bi bi-send"></i> Envíos
+                <a href="{{ url_for('suppliers_ui.list_suppliers') }}" class="nav-item {% if 'suppliers' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-truck"></i> Proveedores
                 </a>
-                <a href="#" class="nav-item"><i class="bi bi-envelope"></i> Correos</a>
-                <a href="{{ url_for('products_ui.list_page') }}"
-                    class="nav-item {% if 'products' in request.endpoint %}active{% endif %}">
+                <a href="#" class="nav-item disabled-link" title="Proximamente">
+                    <i class="bi bi-cart"></i> Pedidos
+                </a>
+                <a href="{{ url_for('shipments_ui.list_page') }}" class="nav-item {% if 'shipments' in request.endpoint %}active{% endif %}">
+                    <i class="bi bi-send"></i> Envios
+                </a>
+                <a href="#" class="nav-item disabled-link" title="Proximamente">
+                    <i class="bi bi-envelope"></i> Correos
+                </a>
+                <a href="{{ url_for('products_ui.list_page') }}" class="nav-item {% if 'products' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-box-seam"></i> Productos
                 </a>
-                <a href="#" class="nav-item"><i class="bi bi-file-earmark-text"></i> Facturas</a>
-                <a href="#" class="nav-item"><i class="bi bi-cash-coin"></i> Finanzas</a>
+                <a href="#" class="nav-item disabled-link" title="Proximamente">
+                    <i class="bi bi-file-earmark-text"></i> Facturas
+                </a>
+                <a href="#" class="nav-item disabled-link" title="Proximamente">
+                    <i class="bi bi-cash-coin"></i> Finanzas
+                </a>
                 <a href="/reportes" class="nav-item {% if 'reportes' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-bar-chart"></i> Reportes
                 </a>
                 <a href="/ia-hermes" class="nav-item {% if 'ia_hermes' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-robot"></i> IA HERMES
                 </a>
-                <a href="#" class="nav-item"><i class="bi bi-gear"></i> Ajustes</a>
+                <a href="#" class="nav-item disabled-link" title="Proximamente">
+                    <i class="bi bi-gear"></i> Ajustes
+                </a>
             </nav>
         </aside>
 

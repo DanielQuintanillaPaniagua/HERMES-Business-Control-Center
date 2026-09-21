@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Proveedor{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/suppliers.css') }}">
+
+<div class="page-header">
+    <h1>
+        <i class="bi bi-truck"></i>
+        {{ 'Editar proveedor' if modo == 'editar' else 'Nuevo proveedor' }}
+    </h1>
+</div>
+
+<form id="form-proveedor" class="form-card">
+    <input type="hidden" id="proveedor-id" value="{{ supplier_id or '' }}">
+
+    <div class="form-group">
+        <label for="nombre">Nombre / Razón social *</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="contacto">Persona de contacto</label>
+            <input type="text" id="contacto" name="contacto" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a href="{{ url_for('suppliers_ui.list_suppliers') }}" class="btn-outline">Cancelar</a>
+        <button type="submit" class="btn-gold">
+            <i class="bi bi-check-lg"></i> Guardar
+        </button>
+    </div>
+</form>
+
+<script src="{{ url_for('static', filename='js/suppliers.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modo = "{{ modo }}";
+        const proveedorId = document.getElementById('proveedor-id').value;
+        if (modo === 'editar' && proveedorId) {
+            precargarFormulario(proveedorId);
+        }
+        document.getElementById('form-proveedor').addEventListener('submit', (e) => {
+            e.preventDefault();
+            guardarProveedor(modo, proveedorId);
+        });
+    });
+</script>
+{% endblock %}

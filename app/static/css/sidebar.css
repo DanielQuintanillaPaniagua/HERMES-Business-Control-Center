@@ -78,4 +78,44 @@
     .hermes-content {
         padding: 16px;
     }
+
+    /* Enlaces deshabilitados (proximamente) */
+    .hermes-sidebar .nav-item.disabled-link {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .hermes-sidebar .nav-item.disabled-link:hover {
+        background: transparent;
+        color: #999;
+    }
+
+    .hermes-sidebar .nav-item.disabled-link::after {
+        content: "🔒";
+        margin-left: auto;
+        font-size: 0.7rem;
+        opacity: 0.6;
+    }
+}
+/* Enlaces deshabilitados (proximamente) */
+.hermes-sidebar .nav-item.disabled-link {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+    position: relative;
+}
+
+.hermes-sidebar .nav-item.disabled-link:hover {
+    background: transparent;
+    color: #999;
+}
+
+.hermes-sidebar .nav-item.disabled-link::after {
+    content: "\1F512";
+    margin-left: auto;
+    font-size: 0.75rem;
+    opacity: 0.5;
+    position: absolute;
+    right: 14px;
 }
