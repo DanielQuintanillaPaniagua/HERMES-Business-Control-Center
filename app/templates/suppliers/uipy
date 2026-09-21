@@ -1,0 +1,27 @@
+from flask import Blueprint, render_template
+
+suppliers_ui = Blueprint("suppliers_ui", __name__, url_prefix="/suppliers")
+
+
+@suppliers_ui.route("/")
+def list_suppliers():
+    """Listado de proveedores."""
+    return render_template("suppliers/list.html")
+
+
+@suppliers_ui.route("/new")
+def new_supplier():
+    """Formulario de alta."""
+    return render_template("suppliers/form.html", modo="crear", supplier_id=None)
+
+
+@suppliers_ui.route("/<int:supplier_id>")
+def supplier_detail(supplier_id):
+    """Detalle de un proveedor."""
+    return render_template("suppliers/detail.html", supplier_id=supplier_id)
+
+
+@suppliers_ui.route("/<int:supplier_id>/edit")
+def edit_supplier(supplier_id):
+    """Formulario de edición."""
+    return render_template("suppliers/form.html", modo="editar", supplier_id=supplier_id)

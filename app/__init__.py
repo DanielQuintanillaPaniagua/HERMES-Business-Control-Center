@@ -75,3 +75,6 @@ def create_app():
 
 
     return app
+
+    from app.routes.shipments_ui import shipments_ui
+app.register_blueprint(shipments_ui)

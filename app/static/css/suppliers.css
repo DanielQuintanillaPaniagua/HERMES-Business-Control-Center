@@ -1,0 +1,131 @@
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.filtros-bar {
+    margin-bottom: 1rem;
+    max-width: 320px;
+}
+
+.proveedores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.proveedor-card {
+    border: 1px solid var(--border-color, #2a2a2a);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    background: var(--card-bg, #1a1a1a);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.proveedor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+}
+
+.proveedor-card h3 {
+    margin: 0 0 .5rem;
+    font-size: 1.05rem;
+}
+
+.proveedor-card .saldo {
+    font-weight: 600;
+}
+
+.text-danger {
+    color: #e5484d;
+}
+
+.text-success {
+    color: #3dd68c;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* Formulario */
+.form-card {
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: .35rem;
+    font-size: .9rem;
+    opacity: .85;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    margin-top: .5rem;
+}
+
+/* Detalle */
+.detalle-card {
+    max-width: 640px;
+    border: 1px solid var(--border-color, #2a2a2a);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.detalle-header {
+    padding: 1rem 1.25rem;
+    background: var(--header-bg, #1f1f1f);
+}
+
+.detalle-header h2 {
+    margin: 0;
+}
+
+.detalle-body {
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.detalle-item .label {
+    display: block;
+    font-size: .8rem;
+    opacity: .65;
+    margin-bottom: .15rem;
+}
+
+.detalle-item .valor {
+    font-size: 1rem;
+}
+
+.detalle-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border-color, #2a2a2a);
+}
+
+.cargando,
+.error {
+    opacity: .7;
+    padding: 1rem 0;
+}
