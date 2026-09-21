@@ -7,5 +7,5 @@ bp = Blueprint('dashboard', __name__)
 @bp.route('/')
 @login_required
 def index():
-    """PÃ¡gina principal de HERMES tras iniciar sesiÃ³n."""
+    """Página principal de HERMES tras iniciar sesión."""
     return render_template('dashboard.html')

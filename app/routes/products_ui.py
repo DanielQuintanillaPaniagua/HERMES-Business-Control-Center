@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+﻿from flask import Blueprint, render_template
 from flask_login import login_required
 
 bp = Blueprint('products_ui', __name__, url_prefix='/products')

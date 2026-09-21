@@ -1,121 +1,24 @@
-/* ==========================================================================
-   HERMES - Reportes / Analíticas
-   Usa las variables (--gold, --card, --card-border, --text-dim, --green,
-   --red...) definidas en hermes.css, así que hermes.css debe cargar ANTES.
-   ========================================================================== */
+﻿/* ============================================
+   HERMES - Reportes
+   ============================================ */
 
-.tabs-row {
-    display: flex;
-    gap: 4px;
-    border-bottom: 1px solid var(--card-border);
-    margin-bottom: 20px;
+.reportes-content {
+    padding: 0;
 }
 
-.tab {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    font-size: 13.5px;
-    padding: 10px 14px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+.reportes-content .metric-card {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
 }
 
-.tab:hover {
-    color: var(--text);
+.reportes-content .metric-card:hover {
+    border-color: #d4af37 !important;
+    transform: translateY(-2px);
 }
 
-.tab.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
-    font-weight: 600;
-}
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.summary-card .value {
-    font-size: 22px;
-    font-weight: 700;
-    margin: 6px 0 4px;
-}
-
-.summary-card .delta {
-    font-size: 12px;
-    color: var(--green);
-}
-
-.summary-card .delta.down {
-    color: var(--red);
-}
-
-.charts-row {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 16px;
-}
-
-.chart-card {
-    min-height: 320px;
-}
-
-.chart-wrap {
-    position: relative;
-    height: 240px;
-    margin-top: 14px;
-}
-
-.donut-card {
-    display: flex;
-    flex-direction: column;
-}
-
-.donut-wrap {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 14px auto 0;
-}
-
-.donut-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 16px;
-}
-
-.donut-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text-dim);
-}
-
-.donut-legend-item .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.donut-legend-item .pct {
-    margin-left: auto;
-    color: var(--text);
-    font-weight: 600;
-}
-
-@media (max-width: 900px) {
-    .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .charts-row {
-        grid-template-columns: 1fr;
-    }
+.reportes-content .metric-card canvas {
+    max-height: 320px;
 }

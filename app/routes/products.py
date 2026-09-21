@@ -25,7 +25,7 @@ def list_products():
 @bp.route('/<int:id>', methods=['GET'])
 @login_required
 def get_product(id):
-    """Devuelve un producto especÃ­fico."""
+    """Devuelve un producto especí­fico."""
     producto = Product.query.get(id)
     if not producto:
         return jsonify({'success': False, 'error': 'Producto no encontrado'}), 404
@@ -55,13 +55,13 @@ def create_product():
         return jsonify({'success': False, 'error': 'Nombre y SKU son obligatorios'}), 400
 
     if Product.query.filter_by(sku=sku).first():
-        return jsonify({'success': False, 'error': 'Ese SKU ya estÃ¡ registrado'}), 409
+        return jsonify({'success': False, 'error': 'Ese SKU ya está registrado'}), 409
 
     try:
         precio = float(precio)
         stock = int(stock)
     except (ValueError, TypeError):
-        return jsonify({'success': False, 'error': 'Precio o stock invÃ¡lidos'}), 400
+        return jsonify({'success': False, 'error': 'Precio o stock inválidos'}), 400
 
     if precio < 0 or stock < 0:
         return jsonify({'success': False, 'error': 'Precio y stock deben ser positivos'}), 400
@@ -110,13 +110,13 @@ def update_product(id):
 
     existente = Product.query.filter_by(sku=sku).first()
     if existente and existente.id != id:
-        return jsonify({'success': False, 'error': 'Ese SKU ya estÃ¡ en uso'}), 409
+        return jsonify({'success': False, 'error': 'Ese SKU ya está en uso'}), 409
 
     try:
         precio = float(data.get('precio', producto.precio))
         stock = int(data.get('stock', producto.stock))
     except (ValueError, TypeError):
-        return jsonify({'success': False, 'error': 'Precio o stock invÃ¡lidos'}), 400
+        return jsonify({'success': False, 'error': 'Precio o stock inválidos'}), 400
 
     if precio < 0 or stock < 0:
         return jsonify({'success': False, 'error': 'Precio y stock deben ser positivos'}), 400

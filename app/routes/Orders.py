@@ -29,7 +29,7 @@ def list_orders():
 @bp.route('/<int:id>', methods=['GET'])
 @login_required
 def get_order(id):
-    """Devuelve un pedido especÃ­fico."""
+    """Devuelve un pedido especí­fico."""
     pedido = Order.query.get(id)
     if not pedido:
         return jsonify({'success': False, 'error': 'Pedido no encontrado'}), 404
@@ -65,7 +65,7 @@ def create_order():
     try:
         cantidad = int(cantidad)
     except (ValueError, TypeError):
-        return jsonify({'success': False, 'error': 'Cantidad invÃ¡lida'}), 400
+        return jsonify({'success': False, 'error': 'Cantidad inválida'}), 400
  
     if cantidad <= 0:
         return jsonify({'success': False, 'error': 'La cantidad debe ser mayor a 0'}), 400
@@ -117,7 +117,7 @@ def update_order(id):
     try:
         cantidad = int(cantidad)
     except (ValueError, TypeError):
-        return jsonify({'success': False, 'error': 'Cantidad invÃ¡lida'}), 400
+        return jsonify({'success': False, 'error': 'Cantidad inválida'}), 400
  
     if cantidad <= 0:
         return jsonify({'success': False, 'error': 'La cantidad debe ser mayor a 0'}), 400

@@ -1,99 +1,59 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}HERMES AI - HERMES{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/hermes.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/ia_hermes.css') }}">
 {% endblock %}
 
 {% block body_content %}
-<div class="app-shell">
 
-    <aside class="sidebar">
-        <div class="brand">
-            <div class="brand-mark">H</div>
-            <div class="brand-text">
-                <strong>HERMES</strong>
-                <span>BUSINESS CONTROL</span>
-            </div>
-        </div>
-        <nav class="nav-group">
-            <a class="nav-item" href="{{ url_for('dashboard.index') }}"><span class="nav-icon"><i
-                        class="bi bi-speedometer2"></i></span>Dashboard</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-people"></i></span>Clientes</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-truck"></i></span>Proveedores</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-cart3"></i></span>Pedidos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-box-seam"></i></span>Envíos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-envelope"></i></span>Correos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-box"></i></span>Productos</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-receipt"></i></span>Facturas</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-cash-stack"></i></span>Finanzas</a>
-            <a class="nav-item" href="{{ url_for('reportes.index') }}"><span class="nav-icon"><i
-                        class="bi bi-bar-chart"></i></span>Reportes</a>
-            <a class="nav-item active" href="{{ url_for('ia_hermes.index') }}"><span class="nav-icon"><i
-                        class="bi bi-robot"></i></span>IA HERMES</a>
-            <a class="nav-item" href="#"><span class="nav-icon"><i class="bi bi-gear"></i></span>Ajustes</a>
-        </nav>
+<div class="mb-4">
+    <h1 style="color: #d4af37; font-weight: 700;">HERMES AI</h1>
+    <p class="text-muted">Preguntale a HERMES sobre el estado de tu negocio.</p>
+</div>
+
+<div class="ia-layout">
+
+    <aside class="ia-side">
+        <div class="ia-side-item active"><i class="bi bi-chat-dots"></i> Conversacion</div>
+        <div class="ia-side-item"><i class="bi bi-bookmark"></i> Consultas guardadas</div>
+        <div class="ia-side-item"><i class="bi bi-file-earmark-bar-graph"></i> Reportes automaticos</div>
+        <div class="ia-side-item"><i class="bi bi-gear"></i> Configuracion</div>
     </aside>
 
-    <main class="main ia-main">
-        <div class="page-header">
-            <div>
-                <h1>HERMES AI</h1>
-                <p>Pregúntale a HERMES sobre el estado de tu negocio.</p>
-            </div>
+    <section class="ia-chat">
+        <div class="ia-chat-header">
+            <div class="ai-avatar">H</div>
+            <p class="ia-greeting">Hola, {{ current_user.username }}. En que puedo ayudarte hoy?</p>
         </div>
 
-        <div class="ia-layout">
-
-            <aside class="ia-side">
-                <div class="ia-side-item active"><i class="bi bi-chat-dots"></i> Conversación</div>
-                <div class="ia-side-item"><i class="bi bi-bookmark"></i> Consultas guardadas</div>
-                <div class="ia-side-item"><i class="bi bi-file-earmark-bar-graph"></i> Reportes automáticos</div>
-                <div class="ia-side-item"><i class="bi bi-gear"></i> Configuración</div>
-            </aside>
-
-            <section class="ia-chat card">
-                <div class="ia-chat-header">
-                    <div class="ai-avatar">H</div>
-                    <p class="ia-greeting">Hola, {{ current_user.username }}. ¿En qué puedo ayudarte hoy?</p>
-                </div>
-
-                <div class="quick-chips">
-                    <button class="quick-chip" data-q="¿Qué pedidos tenemos atrasados?">¿Qué pedidos tenemos
-                        atrasados?</button>
-                    <button class="quick-chip" data-q="¿Cuánto le debemos a proveedores?">¿Cuánto le debemos a
-                        proveedores?</button>
-                    <button class="quick-chip" data-q="¿Qué clientes compraron más este mes?">¿Qué clientes compraron
-                        más este mes?</button>
-                </div>
-
-                <div class="chat-messages" id="chatMessages"></div>
-
-                <div class="chat-input-row">
-                    <input type="text" id="chatInput" placeholder="Escribe tu consulta aquí..." autocomplete="off">
-                    <button id="sendBtn" class="btn btn-primary" type="button"><i class="bi bi-send"></i></button>
-                </div>
-                <p class="ia-disclaimer">Los datos mostrados son actualizados automáticamente.</p>
-            </section>
-
-            <aside class="ia-suggestions card">
-                <p class="card-title">Sugerencias</p>
-                <div class="suggestion-card" data-q="¿Cuánto le debemos a proveedores?">¿Cuánto le debemos a
-                    proveedores?</div>
-                <div class="suggestion-card" data-q="¿Qué clientes compraron más este mes?">¿Qué clientes compraron más
-                    este mes?</div>
-                <div class="suggestion-card" data-q="Resumen de ventas de la semana">Resumen de ventas de la semana
-                </div>
-                <div class="suggestion-card" data-q="¿Qué envíos necesitan atención?">¿Qué envíos necesitan atención?
-                </div>
-                <div class="suggestion-card" data-q="Comparar ventas del mes anterior">Comparar ventas del mes anterior
-                </div>
-            </aside>
+        <div class="quick-chips">
+            <button class="quick-chip" data-q="Que pedidos tenemos atrasados?">Que pedidos tenemos atrasados?</button>
+            <button class="quick-chip" data-q="Cuanto le debemos a proveedores?">Cuanto le debemos a proveedores?</button>
+            <button class="quick-chip" data-q="Que clientes compraron mas este mes?">Que clientes compraron mas este mes?</button>
         </div>
-    </main>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Escribe tu consulta aqui..." autocomplete="off">
+            <button id="sendBtn" class="btn btn-primary" type="button"><i class="bi bi-send"></i></button>
+        </div>
+        <p class="ia-disclaimer">Los datos mostrados son actualizados automaticamente.</p>
+    </section>
+
+    <aside class="ia-suggestions">
+        <p class="card-title">Sugerencias</p>
+        <div class="suggestion-card" data-q="Cuanto le debemos a proveedores?">Cuanto le debemos a proveedores?</div>
+        <div class="suggestion-card" data-q="Que clientes compraron mas este mes?">Que clientes compraron mas este mes?</div>
+        <div class="suggestion-card" data-q="Resumen de ventas de la semana">Resumen de ventas de la semana</div>
+        <div class="suggestion-card" data-q="Que envios necesitan atencion?">Que envios necesitan atencion?</div>
+        <div class="suggestion-card" data-q="Comparar ventas del mes anterior">Comparar ventas del mes anterior</div>
+    </aside>
+
 </div>
+
 {% endblock %}
 
 {% block extra_js %}

@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --hermes-gold: #d4af37;
     --hermes-gold-hover: #b8941f;
     --hermes-dark: #1a1a1a;
@@ -8,7 +8,7 @@
 
 /* --- Base --- */
 body {
-    background-color: #f8f9fa;
+    background-color: #0d0d0d;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -150,4 +150,93 @@ body {
 
 .bg-dark-page {
     background-color: var(--hermes-darker);
+}
+/* ============================================
+   HERMES - Textos globales (legibilidad)
+   ============================================ */
+
+/* Texto base: blanco suave */
+body {
+    color: #e8e8e8;
+}
+
+/* Texto secundario (muted): gris claro legible */
+.text-muted {
+    color: #a8a8a8 !important;
+}
+
+/* Texto blanco puro */
+.text-white {
+    color: #ffffff !important;
+}
+
+/* Texto claro */
+.text-light {
+    color: #f0f0f0 !important;
+}
+
+/* Titulos y encabezados */
+h1, h2, h3, h4, h5, h6 {
+    color: #f5f5f5;
+}
+
+/* Parrafos y spans */
+p, span, div {
+    color: inherit;
+}
+
+/* Labels de formularios */
+label {
+    color: #e0e0e0;
+}
+
+/* Texto en tablas */
+table {
+    color: #e0e0e0;
+}
+
+table td {
+    color: #e0e0e0;
+}
+
+table th {
+    color: #f0f0f0;
+}
+
+/* Texto en listas */
+ul, ol, li {
+    color: #e0e0e0;
+}
+
+/* Links generales */
+a {
+    color: #d4af37;
+}
+
+a:hover {
+    color: #f0c950;
+}
+
+/* Placeholders */
+input::placeholder,
+textarea::placeholder {
+    color: #888 !important;
+}
+
+/* Small */
+small {
+    color: #b0b0b0;
+}
+
+/* Strong / negrita */
+strong, b {
+    color: #ffffff;
+}
+
+/* Código */
+code {
+    color: #f0c950;
+    background: #1a1a1a;
+    padding: 2px 6px;
+    border-radius: 4px;
 }

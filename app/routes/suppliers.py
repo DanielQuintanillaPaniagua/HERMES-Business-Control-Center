@@ -23,7 +23,7 @@ def list_suppliers():
 @bp.route('/<int:id>', methods=['GET'])
 @login_required
 def get_supplier(id):
-    """Devuelve un proveedor especÃ­fico."""
+    """Devuelve un proveedor especí­fico."""
     proveedor = Supplier.query.get(id)
     if not proveedor:
         return jsonify({'success': False, 'error': 'Proveedor no encontrado'}), 404
@@ -51,7 +51,7 @@ def create_supplier():
         return jsonify({'success': False, 'error': 'Nombre y email son obligatorios'}), 400
 
     if Supplier.query.filter_by(email=email).first():
-        return jsonify({'success': False, 'error': 'Ese email ya estÃ¡ registrado'}), 409
+        return jsonify({'success': False, 'error': 'Ese email ya está registrado'}), 409
 
     proveedor = Supplier(
         nombre=nombre,
@@ -99,7 +99,7 @@ def update_supplier(id):
 
     existente = Supplier.query.filter_by(email=email).first()
     if existente and existente.id != id:
-        return jsonify({'success': False, 'error': 'Ese email ya estÃ¡ en uso'}), 409
+        return jsonify({'success': False, 'error': 'Ese email ya está en uso'}), 409
 
     proveedor.nombre = nombre
     proveedor.contacto = contacto

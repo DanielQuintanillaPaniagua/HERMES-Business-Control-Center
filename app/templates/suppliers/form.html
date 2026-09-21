@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}{{ 'Editar' if modo == 'editar' else 'Nuevo' }} Proveedor{% endblock %}
 
-{% block content %}
+{% block body_content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/suppliers.css') }}">
 
 <div class="page-header">
