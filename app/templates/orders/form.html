@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Editar' if pedido_id else 'Nuevo' }} Pedido - HERMES{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}">
+{% endblock %}
+
+{% block body_content %}
+<div class="container-fluid pedidos-page" data-bs-theme="dark">
+
+    <div class="mb-4">
+        <a href="{{ url_for('orders_ui.list_page') }}" class="text-decoration-none text-muted">
+            <i class="bi bi-arrow-left"></i> Volver a pedidos
+        </a>
+    </div>
+
+    <div class="form-pedido">
+        <h2>{{ 'Editar Pedido' if pedido_id else 'Nuevo Pedido' }}</h2>
+        <p class="text-muted mb-4">
+            {{ 'Modifica los datos del pedido' if pedido_id else 'Rellena los datos para crear un nuevo pedido' }}
+        </p>
+
+        <form id="form-pedido" {% if pedido_id %}data-pedido-id="{{ pedido_id }}" {% endif %}>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cliente_id" class="form-label">Cliente <span class="text-danger">*</span></label>
+                    <select id="cliente_id" name="cliente_id" class="form-select" required>
+                        <option value="">Cargando clientes...</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="producto_id" class="form-label">Producto <span class="text-danger">*</span></label>
+                    <select id="producto_id" name="producto_id" class="form-select" required>
+                        <option value="">Cargando productos...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cantidad" class="form-label">Cantidad <span class="text-danger">*</span></label>
+                    <input type="number" id="cantidad" name="cantidad" class="form-control" min="1" step="1"
+                        placeholder="1" required>
+                </div>
+                {% if pedido_id %}
+                <div class="col-md-6 mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select id="estado" name="estado" class="form-select">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Completado">Completado</option>
+                        <option value="Atrasado">Atrasado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="notas" class="form-label">Notas</label>
+                <textarea id="notas" name="notas" class="form-control" rows="3" maxlength="300"
+                    placeholder="Observaciones del pedido (máx. 300 caracteres)"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('orders_ui.list_page') }}" class="btn-cancelar">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-gold">
+                    <i class="bi bi-check-circle"></i>
+                    {{ 'Guardar cambios' if pedido_id else 'Crear pedido' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/orders.js') }}"></script>
+{% endblock %}
