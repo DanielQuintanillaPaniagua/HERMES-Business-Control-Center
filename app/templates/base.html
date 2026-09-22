@@ -56,9 +56,7 @@
                 <a href="{{ url_for('suppliers_ui.list_suppliers') }}" class="nav-item {% if 'suppliers' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-truck"></i> Proveedores
                 </a>
-                <a href="#" class="nav-item disabled-link" title="Proximamente">
-                    <i class="bi bi-cart"></i> Pedidos
-                </a>
+                <a href="{{ url_for('orders_ui.list_page') }}" class="nav-item {% if 'orders' in request.endpoint %}active{% endif %}"><i class="bi bi-cart"></i> Pedidos</a>
                 <a href="{{ url_for('shipments_ui.list_page') }}" class="nav-item {% if 'shipments' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-send"></i> Envios
                 </a>
@@ -68,9 +66,7 @@
                 <a href="{{ url_for('products_ui.list_page') }}" class="nav-item {% if 'products' in request.endpoint %}active{% endif %}">
                     <i class="bi bi-box-seam"></i> Productos
                 </a>
-                <a href="#" class="nav-item disabled-link" title="Proximamente">
-                    <i class="bi bi-file-earmark-text"></i> Facturas
-                </a>
+                <a href="{{ url_for('invoices_ui.list_page') }}" class="nav-item {% if 'invoices' in request.endpoint %}active{% endif %}"><i class="bi bi-file-earmark-text"></i> Facturas</a>
                 <a href="#" class="nav-item disabled-link" title="Proximamente">
                     <i class="bi bi-cash-coin"></i> Finanzas
                 </a>

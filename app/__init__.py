@@ -1,4 +1,4 @@
-import os
+﻿import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -63,7 +63,10 @@ def create_app():
     from app.routes.products_ui import bp as products_ui_bp
     from app.routes.shipments_ui import bp as shipments_ui_bp
     from app.routes.dashboard_activities import bp as dashboard_activities_bp
-    from app.routes.suppliers_ui import suppliers_ui                
+    from app.routes.suppliers_ui import suppliers_ui
+    from app.routes.invoices import bp as invoices_bp
+    from app.routes.invoices_ui import bp as invoices_ui_bp
+    from app.routes.orders_ui import bp as orders_ui_bp
 
 
 
@@ -85,7 +88,11 @@ def create_app():
     app.register_blueprint(products_ui_bp)
     app.register_blueprint(shipments_ui_bp)
     app.register_blueprint(dashboard_activities_bp)
-    app.register_blueprint(suppliers_ui)                          
+    app.register_blueprint(suppliers_ui)
+    app.register_blueprint(invoices_bp)
+    app.register_blueprint(invoices_ui_bp) 
+    app.register_blueprint(orders_ui_bp)
+                         
 
 
 
